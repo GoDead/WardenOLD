@@ -33,7 +33,7 @@ public class ClearVL extends SimpleSubCommand {
 			return;
 		}
 		user.getViolationsMap().clear();
-		tell("&cWarden &8» &7" + "&7Cleared " + player.getName() + "'s Violations!");
+		tell("&cWarden &8» &7" + "&7Successfully cleared " + player.getName() + "'s Violations!");
 	}
 
 }
