@@ -14,6 +14,7 @@ public class BadPacketsB extends PublicCheck {
 		super("BadPackets", 'B', Category.PLAYER);
 	}
 
+	//https://www.youtube.com/watch?v=uCgq8EnNje8&t
 	@Override
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		if (!(ConfigManager.getInstance().isBadPacketsBEnabled())) return e;

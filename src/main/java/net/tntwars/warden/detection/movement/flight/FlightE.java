@@ -25,9 +25,9 @@ public class FlightE extends PublicCheck {
 			if (event.getPlayer().getLocation().getBlock().getType() == Material.CARPET) return e;
 			if (event.getPlayer().getLocation().add(0, -1, 0).getBlock().getType() == Material.CARPET) return e;
 			if (!event.getPlayer().getLocation().getBlock().isLiquid() && !event.getPlayer().isOnGround() && !onGround(event.getPlayer()) && event.getPlayer().getVelocity().length() > 0.5) {
-				final double offsetH = Math.hypot(event.getTo().getX() - event.getFrom().getX(), event.getTo().getZ() - event.getFrom().getZ());
+				final double offsetXZ = Math.hypot(event.getTo().getX() - event.getFrom().getX(), event.getTo().getZ() - event.getFrom().getZ());
 				final double offsetY = event.getTo().getY() - event.getFrom().getY();
-				if (offsetH > 0.0 && offsetY == 0.0) {
+				if (offsetXZ > 0.0 && offsetY == 0.0) {
 					flag(user);
 				}
 			}

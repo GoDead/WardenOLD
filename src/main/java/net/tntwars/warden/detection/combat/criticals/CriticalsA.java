@@ -26,7 +26,6 @@ public class CriticalsA extends PublicCheck {
 				PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
 				if (player.isInsideVehicle())
 					return e;
-
 				if (!player.getGameMode().equals(GameMode.SURVIVAL) && !player.getGameMode().equals(GameMode.ADVENTURE))
 					return e;
 				if (!player.isOnGround() && !player.isFlying()) {

@@ -17,6 +17,7 @@ public class BadPacketsA extends PrivateCheck {
 
 	private boolean wasLastArmAnimation;
 
+	//https://www.youtube.com/watch?v=uCgq8EnNje8&t
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
 		if (!(ConfigManager.getInstance().isBadPacketsAEnabled())) return e;

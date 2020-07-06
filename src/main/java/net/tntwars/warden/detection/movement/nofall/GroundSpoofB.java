@@ -26,8 +26,8 @@ public class GroundSpoofB extends PublicCheck {
 			if (player.getGameMode().equals(GameMode.CREATIVE) || player.isInsideVehicle() || player.isDead() || (event.getFrom().getX() == event.getTo().getX() && event.getFrom().getY() == event.getTo().getY() && event.getFrom().getZ() == event.getTo().getZ()))
 				return e;
 			if (!(PacketEvents.getAPI().getPlayerUtilities().getPlayerPing(player) > 100 || player.getNoDamageTicks() != 0 || player.getVehicle() != null || player.isDead() || player.getGameMode().equals((Object) GameMode.CREATIVE))) {
-				double yDiff = event.getFrom().getY() - event.getTo().getY();
-				if (player.isOnGround() && yDiff > 0.8) {
+				double deltaY = event.getFrom().getY() - event.getTo().getY();
+				if (player.isOnGround() && deltaY > 0.8) {
 					flag(user);
 				}
 			}

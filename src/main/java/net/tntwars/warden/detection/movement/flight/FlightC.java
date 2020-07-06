@@ -23,6 +23,7 @@ public class FlightC extends PrivateCheck {
 
 	int every = 0;
 
+	//https://www.youtube.com/watch?v=U6mYAyThFcE
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent event) {
 		if (!ConfigManager.getInstance().isFlightCEnabled()) return event;

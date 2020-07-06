@@ -18,9 +18,6 @@ public class KillAuraE extends PrivateCheck {
 		super(data, "KillAura", 'E', Category.COMBAT);
 	}
 
-	int verbose = 0;
-	private double preVLA;
-
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
 		if (!(ConfigManager.getInstance().isKillAuraBEnabled())) return e;

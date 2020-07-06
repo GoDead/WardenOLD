@@ -1,7 +1,6 @@
 package net.tntwars.warden.detection.movement.flight;
 
 import io.github.retrooper.packetevents.event.impl.BukkitMoveEvent;
-import net.tntwars.warden.Main;
 import net.tntwars.warden.check.api.PrivateCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PrivateCheckEvent;
@@ -25,7 +24,6 @@ public class FlightA extends PrivateCheck {
 		if (!ConfigManager.getInstance().isFlightAEnabled()) return event;
 		if (event.getCauseEvent() instanceof BukkitMoveEvent) {
 			BukkitMoveEvent moveEvent = (BukkitMoveEvent) event.getCauseEvent();
-			PlayerData user = Main.getPlayerDataManager().find(moveEvent.getPlayer().getUniqueId());
 			Location to = moveEvent.getTo();
 			Location from = moveEvent.getFrom();
 			if (!ConfigManager.getInstance().isFlightAEnabled()) return event;

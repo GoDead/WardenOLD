@@ -32,6 +32,7 @@ public class SpeedA extends PublicCheck {
 		return e;
 	}
 
+	//https://www.youtube.com/watch?v=syliroWqHcs&t
 	public boolean runCheck(Distance distance, Player player) {
 		Double xz_speed = (distance.getxDiff() > distance.getzDiff() ? distance.getxDiff() : distance.getzDiff());
 		if (xz_speed > 0.75D && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {

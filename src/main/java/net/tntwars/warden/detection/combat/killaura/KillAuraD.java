@@ -31,8 +31,8 @@ public class KillAuraD extends PrivateCheck {
 			Location from = event.getFrom();
 			float pitchChange = Math.abs(to.getPitch() - from.getPitch());
 			float yawChange = Math.abs(to.getYaw() - from.getYaw());
-			long a = (long) ((double) pitchChange * this.multiplier);
-			long b = (long) ((double) this.previous * this.multiplier);
+			long a = (long) ((double) pitchChange * multiplier);
+			long b = (long) ((double) previous * multiplier);
 			long gcd = gcd(16384L, a, b);
 			if ((double) yawChange > 0.9 && (double) pitchChange < 15.0 && gcd < 131072L) {
 				if ((double) yawChange < 9.7 && (double) pitchChange > 0.05) {
@@ -54,6 +54,7 @@ public class KillAuraD extends PrivateCheck {
 		return e;
 	}
 
+	//From another anticheat
 	public static long gcd(long limit, long a, long b) {
 		return b <= limit ? a : gcd(limit, b, a % b);
 	}

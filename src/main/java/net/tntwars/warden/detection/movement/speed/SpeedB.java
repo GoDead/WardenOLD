@@ -34,8 +34,8 @@ public class SpeedB extends PublicCheck {
 			}
 			Vector from = event.getFrom().toVector().clone().setY(0);
 			Vector to = event.getTo().toVector().clone().setY(0);
-			double speed = to.distanceSquared(from);
-			if (speed * 10 > 4) {
+			double speedSquared = to.distanceSquared(from);
+			if (speedSquared * 10 > 4) {
 				flag(user);
 			}
 		}

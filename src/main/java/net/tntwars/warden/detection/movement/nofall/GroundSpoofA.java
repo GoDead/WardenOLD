@@ -24,11 +24,11 @@ public class GroundSpoofA extends PublicCheck {
 			Player player = event.getPlayer();
 			if (player.getGameMode().equals(GameMode.CREATIVE) || player.isInsideVehicle() || player.isDead() || (event.getFrom().getX() == event.getTo().getX() && event.getFrom().getY() == event.getTo().getY() && event.getFrom().getZ() == event.getTo().getZ()))
 				return e;
-			double vd = event.getTo().getY() - event.getFrom().getY();
-			double yd = Math.abs(event.getFrom().getY() - event.getTo().getY());
-			boolean up = (vd > 0.0D);
+			double deltaY = event.getTo().getY() - event.getFrom().getY();
+			double deltaYB = Math.abs(event.getFrom().getY() - event.getTo().getY());
+			boolean up = (deltaY > 0.0D);
 			if (!player.isFlying()) {
-				if (!up && yd > 0.4D && player.isOnGround()) {
+				if (!up && deltaYB > 0.4D && player.isOnGround()) {
 					flag(user);
 				}
 			}
