@@ -1,5 +1,6 @@
 package net.tntwars.warden.detection.player.badpackets;
 
+import io.github.retrooper.packetevents.enums.ServerVersion;
 import io.github.retrooper.packetevents.enums.minecraft.EntityUseAction;
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
 import io.github.retrooper.packetevents.packet.PacketType;
@@ -20,6 +21,7 @@ public class BadPacketsA extends PrivateCheck {
 	//https://www.youtube.com/watch?v=uCgq8EnNje8&t
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
+		if (!ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return e;
 		if (!(ConfigManager.getInstance().isBadPacketsAEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.ARM_ANIMATION) {

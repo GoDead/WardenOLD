@@ -6,9 +6,11 @@ import net.tntwars.warden.check.api.PublicCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 public class FlightB extends PublicCheck {
 	public FlightB() {
@@ -23,6 +25,8 @@ public class FlightB extends PublicCheck {
 			PlayerData user = Main.getPlayerDataManager().find(moveEvent.getPlayer().getUniqueId());
 			Location to = moveEvent.getTo();
 			Location from = moveEvent.getFrom();
+			Player player = user.getPlayer();
+			if (Compatibility.isLegitVersion(player)) return event;
 			if (!ConfigManager.getInstance().isFlightBEnabled()) return event;
 			if (moveEvent.getPlayer().getVelocity().length() < 0.8) return event;
 			if (from.getBlock() == to.getBlock()) return event;

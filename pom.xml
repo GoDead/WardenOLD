@@ -35,14 +35,14 @@
     <groupId>xyz.tntwars</groupId>
     <artifactId>warden</artifactId>
     <name>Warden</name>
-    <version>1.0.0</version>
+    <version>B0.6.3</version>
 
     <!-- ############################################################################### -->
 
     <!--
        Configure some of the Maven settings. We also define
        our new variables here such as the main class or Java version
-       for our plugin.
+       for our plugin
 
        You can use those variables in your src/resources folder. See
        plugin.yml folder there for example usage.
@@ -53,7 +53,6 @@
         <main.class>xyz.tntwars.warden.Main</main.class>
 
         <!-- The Foundation version - change to latest version from https://github.com/kangarko/Foundation/releases -->
-        <foundation.version>5.3.6</foundation.version>
 
         <!-- The Java version your plugin uses, see bstats.org for what most servers have and use that -->
         <java.version>1.8</java.version>
@@ -96,10 +95,6 @@
         <repository>
             <id>mineacademy-repo</id>
             <url>https://repo.mineacademy.org/repository/maven-public/</url>
-        </repository>
-        <repository>
-            <id>mineacademy-external-plugins</id>
-            <url>https://repo.mineacademy.org/repository/external-plugins/</url>
         </repository>
         <repository>
             <id>funkemunky-releases</id>
@@ -156,18 +151,24 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-
-            <!-- Change this to the latest version to stay up to date -->
             <version>1.8.8-R0.1-SNAPSHOT</version>
-
-            <!--
-               The scope indicates if this library should be packaged together with our plugin
-               when we want to publish it.
-
-               Set this to "compile" if you want all classes from this library to be copied
-               to your plugin's jar, otherwise set this to "provided".
-           -->
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.github.spigot</groupId>
@@ -290,12 +291,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
-        </dependency>
-
         <!--
            Import the Foundation library to kickstart our plugin development
        -->
@@ -309,7 +304,7 @@
         <dependency>
             <groupId>org.mineacademy.libraries</groupId>
             <artifactId>foundation</artifactId>
-            <version>5.4.4-SNAPSHOT</version>
+            <version>5.4.4-20200707.095659-16</version>
         </dependency>
         <dependency>
             <groupId>com.github.dmulloy2</groupId>

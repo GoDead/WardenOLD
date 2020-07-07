@@ -1,10 +1,12 @@
 package net.tntwars.warden.check.api;
 
+import net.tntwars.warden.Main;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.CheckEvent;
 import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
 import net.tntwars.warden.utils.Flag;
+import org.bukkit.Bukkit;
 
 
 public abstract class PublicCheck extends Check {
@@ -25,6 +27,6 @@ public abstract class PublicCheck extends Check {
 	}
 
 	public void flag(PlayerData data) {
-		Flag.flag(data, this);
+		Bukkit.getScheduler().runTask(Main.getInstance(), () -> Flag.flag(data, this));
 	}
 }

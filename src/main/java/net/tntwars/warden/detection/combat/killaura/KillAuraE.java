@@ -27,7 +27,7 @@ public class KillAuraE extends PrivateCheck {
 				if (packet.getAction() != EntityUseAction.ATTACK) return e;
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				Entity entity = packet.getEntity();
-				if (getLookingAt(player, entity)) {
+				if (!getNotLookingAt(player, entity)) {
 					flag();
 				}
 
@@ -36,12 +36,12 @@ public class KillAuraE extends PrivateCheck {
 		return e;
 	}
 
-	private boolean getLookingAt(Player player, Entity player1) {
+	private boolean getNotLookingAt(Player player, Entity player1) {
 		Vector eye = player.getEyeLocation().getDirection();
 		Vector toEntity = player1.getLocation().toVector().subtract(player.getEyeLocation().toVector());
 		double dot = toEntity.normalize().dot(eye.normalize());
 		//player.sendMessage(dot + "");
 
-		return dot < 0D;
+		return dot > 0D;
 	}
 }

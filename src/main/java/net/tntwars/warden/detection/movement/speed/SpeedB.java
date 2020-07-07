@@ -6,6 +6,7 @@ import net.tntwars.warden.check.api.PublicCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import org.bukkit.GameMode;
 import org.bukkit.potion.PotionEffectType;
@@ -27,7 +28,8 @@ public class SpeedB extends PublicCheck {
 			if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) return e;
 			if (event.getPlayer().getAllowFlight())
 				return e;
-
+			if (Compatibility.isLegitVersion(event.getPlayer()))
+				return e;
 			if (Math.abs(event.getPlayer().getWalkSpeed()) >= Math.abs(0.3)) {
 				event.getPlayer().sendMessage(Math.abs(event.getPlayer().getWalkSpeed()) + " " + Math.abs(0.3));
 				return e;

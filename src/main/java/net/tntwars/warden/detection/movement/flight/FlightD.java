@@ -6,6 +6,7 @@ import net.tntwars.warden.check.api.PublicCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import org.bukkit.entity.Player;
 
@@ -22,6 +23,7 @@ public class FlightD extends PublicCheck {
 			final double offsetY = event1.getTo().getY() - event1.getFrom().getY();
 			Player player = event1.getPlayer();
 			PlayerData user = Main.getPlayerDataManager().find(((BukkitMoveEvent) event.getCauseEvent()).getPlayer().getUniqueId());
+			if (Compatibility.isLegitVersion(player)) return event;
 			if (String.valueOf(offsetY).contains("E") && !player.getLocation().getBlock().isLiquid()) {
 				flag(user);
 			}

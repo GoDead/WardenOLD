@@ -1,6 +1,5 @@
 package net.tntwars.warden.utils;
 
-import net.tntwars.warden.Main;
 import net.tntwars.warden.check.api.Check;
 import net.tntwars.warden.check.api.customevent.WardenFlagEvent;
 import net.tntwars.warden.check.api.customevent.WardenPunishEvent;
@@ -14,7 +13,7 @@ public class Flag {
 
 	public static void flag(PlayerData data, Check check) {
 		long time = System.currentTimeMillis() - data.getTimeSinceJoin();
-		if (time < 1000) {
+		if (time < 5000) {
 			return;
 		}
 		String name = check.getName();
@@ -50,6 +49,8 @@ public class Flag {
 	}
 
 	public static void punish(PlayerData user, String cheat, char type, int vl) {
+		if (user == null) return;
+		if (user.getPlayer() == null) return;
 		if (user.getPlayer().hasPermission("warden.bypass")) return;
 		if (cheat.contains("Flight")) {
 			switch (type) {
@@ -60,7 +61,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -70,7 +71,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'C':
@@ -80,7 +81,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightCPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightCPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'D':
@@ -90,7 +91,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightDPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightDPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'E':
@@ -100,7 +101,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightEPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightEPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 
@@ -111,7 +112,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightFPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightFPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -124,7 +125,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getSpeedAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getSpeedAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -134,7 +135,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getSpeedBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getSpeedBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -147,7 +148,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getGroundSpoofAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getGroundSpoofAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -157,7 +158,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getGroundSpoofBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getGroundSpoofBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -170,7 +171,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getScaffoldAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getScaffoldAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -180,7 +181,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getScaffoldBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getScaffoldBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -193,7 +194,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getHighJumpAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getHighJumpAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -206,7 +207,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -216,7 +217,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'C':
@@ -226,7 +227,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraCPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraCPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'D':
@@ -236,7 +237,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraDPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraDPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'E':
@@ -246,7 +247,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraEPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraEPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -259,7 +260,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getCriticalsAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getCriticalsAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -269,7 +270,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getCriticalsBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getCriticalsBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -282,7 +283,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -292,7 +293,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -305,7 +306,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFastBowAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFastBowAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -315,7 +316,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFastBowBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFastBowBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -328,7 +329,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getTimerAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getTimerAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -338,7 +339,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getTimerBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getTimerBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -351,7 +352,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getVelocityAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getVelocityAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -361,7 +362,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getVelocityBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getVelocityBPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}
@@ -374,7 +375,7 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getJesusAPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getJesusAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 				case 'B':
@@ -384,7 +385,20 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getJesusBPunish().replace("%player%", user.getPlayer().getName())));
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getJesusBPunish().replace("%player%", user.getPlayer().getName()));
+					}
+					break;
+			}
+		} else if (cheat.contains("Reach")) {
+			switch (type) {
+				case 'A':
+					if (ConfigManager.getInstance().getReachAMaxVL() <= vl && ConfigManager.getInstance().isReachABannable()) {
+						WardenPunishEvent event = new WardenPunishEvent(user.getPlayer(), cheat, type, vl);
+						Bukkit.getPluginManager().callEvent(event);
+						if (event.isCancelled()) {
+							return;
+						}
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getReachAPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}

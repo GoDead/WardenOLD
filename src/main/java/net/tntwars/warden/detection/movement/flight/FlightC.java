@@ -7,6 +7,7 @@ import net.tntwars.warden.check.api.PrivateCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PrivateCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,10 +32,11 @@ public class FlightC extends PrivateCheck {
 			if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) event.getCauseEvent()).getPacketId())) {
 				PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) event.getCauseEvent()).getPlayer().getUniqueId());
 				if (user.getFrom() == null) return event;
+				Player player = user.getPlayer();
+				if (Compatibility.isLegitVersion(player)) return event;
 				double distY = user.getTo().getY() - user.getFrom().getY();
 				double lastDistY = this.lastDistY;
 				this.lastDistY = distY;
-
 				double predictedDist = (lastDistY - 0.08D) * 0.9800000190734863D;
 
 
@@ -46,7 +48,6 @@ public class FlightC extends PrivateCheck {
 
 				boolean lastLastOnGround = this.lastLastOnGround;
 				this.lastLastOnGround = lastOnGround;
-				Player player = ((PacketReceiveEvent) event.getCauseEvent()).getPlayer();
 				if (player.isInsideVehicle() || player.isDead() || player.getAllowFlight() || player.getLocation().getBlock().isLiquid())
 					return event;
 				if (!onGround && !lastOnGround && !lastLastOnGround && Math.abs(predictedDist) >= 0.005D && ((PacketReceiveEvent) event.getCauseEvent()).getPlayer().getVelocity().length() > 0.3D) {

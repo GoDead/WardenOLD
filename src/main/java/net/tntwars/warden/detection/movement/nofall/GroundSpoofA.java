@@ -22,7 +22,7 @@ public class GroundSpoofA extends PublicCheck {
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 			Player player = event.getPlayer();
-			if (player.getGameMode().equals(GameMode.CREATIVE) || player.isInsideVehicle() || player.isDead() || (event.getFrom().getX() == event.getTo().getX() && event.getFrom().getY() == event.getTo().getY() && event.getFrom().getZ() == event.getTo().getZ()))
+			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR || player.isInsideVehicle() || player.isDead() || (event.getFrom().getX() == event.getTo().getX() && event.getFrom().getY() == event.getTo().getY() && event.getFrom().getZ() == event.getTo().getZ()))
 				return e;
 			double deltaY = event.getTo().getY() - event.getFrom().getY();
 			double deltaYB = Math.abs(event.getFrom().getY() - event.getTo().getY());

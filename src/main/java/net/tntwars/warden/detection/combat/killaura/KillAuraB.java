@@ -29,7 +29,7 @@ public class KillAuraB extends PrivateCheck {
 				if (packet.getAction() != EntityUseAction.ATTACK) return e;
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				long elapsed = e.getTimestamp() - lastFlying;
-				if (PacketEvents.getAPI().getPlayerUtilities().getPlayerPing(player) > 100) return e;
+				if (PacketEvents.getAPI().getPlayerUtilities().getPing(player) > 100) return e;
 				if (Math.abs(elapsed) < Math.abs(40)) {
 					flag();
 				}

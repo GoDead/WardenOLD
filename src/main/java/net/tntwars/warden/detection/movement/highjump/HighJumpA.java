@@ -6,6 +6,7 @@ import net.tntwars.warden.check.api.PublicCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import org.bukkit.potion.PotionEffectType;
 
@@ -25,7 +26,8 @@ public class HighJumpA extends PublicCheck {
 			final double offsetY = event.getTo().getY() - event.getFrom().getY();
 			if (event.getPlayer().isOnGround()) return e;
 			if (offsetY > 0.55) {
-				flag(user);
+				if (!Compatibility.isLegitVersion(event.getPlayer()))
+					flag(user);
 			} else {
 				if (user.getVLCount(this) <= 0)
 					user.setVLCount(this, 0);

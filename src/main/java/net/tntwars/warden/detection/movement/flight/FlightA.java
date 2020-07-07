@@ -5,9 +5,11 @@ import net.tntwars.warden.check.api.PrivateCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PrivateCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 
@@ -26,6 +28,8 @@ public class FlightA extends PrivateCheck {
 			BukkitMoveEvent moveEvent = (BukkitMoveEvent) event.getCauseEvent();
 			Location to = moveEvent.getTo();
 			Location from = moveEvent.getFrom();
+			Player player = moveEvent.getPlayer();
+			if (Compatibility.isLegitVersion(player)) return event;
 			if (!ConfigManager.getInstance().isFlightAEnabled()) return event;
 			if (moveEvent.getPlayer().getVelocity().length() < 0.6) return event;
 			if (from.getY() > to.getY()) return event;

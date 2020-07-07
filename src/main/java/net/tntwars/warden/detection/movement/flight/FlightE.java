@@ -6,9 +6,9 @@ import net.tntwars.warden.check.api.PublicCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class FlightE extends PublicCheck {
@@ -22,8 +22,10 @@ public class FlightE extends PublicCheck {
 		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			PlayerData user = Main.getPlayerDataManager().find(((BukkitMoveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
-			if (event.getPlayer().getLocation().getBlock().getType() == Material.CARPET) return e;
-			if (event.getPlayer().getLocation().add(0, -1, 0).getBlock().getType() == Material.CARPET) return e;
+			Player player = user.getPlayer();
+			if (Compatibility.isLegitVersion(player)) return e;
+			if (event.getPlayer().getLocation().getBlock().getType().getData().getName().contains("CARPET")) return e;
+			if (event.getPlayer().getLocation().getBlock().getType().getData().getName().contains("CARPET")) return e;
 			if (!event.getPlayer().getLocation().getBlock().isLiquid() && !event.getPlayer().isOnGround() && !onGround(event.getPlayer()) && event.getPlayer().getVelocity().length() > 0.5) {
 				final double offsetXZ = Math.hypot(event.getTo().getX() - event.getFrom().getX(), event.getTo().getZ() - event.getFrom().getZ());
 				final double offsetY = event.getTo().getY() - event.getFrom().getY();

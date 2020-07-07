@@ -6,6 +6,7 @@ import net.tntwars.warden.check.api.PublicCheck;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
+import net.tntwars.warden.utils.Compatibility;
 import net.tntwars.warden.utils.ConfigManager;
 import net.tntwars.warden.utils.Distance;
 import org.bukkit.GameMode;
@@ -24,6 +25,9 @@ public class SpeedA extends PublicCheck {
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			Distance distance = new Distance(event);
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
+			Player player = user.getPlayer();
+			if (Compatibility.isLegitVersion(player))
+				return e;
 			if (!runCheck(distance, event.getPlayer())) return e;
 			if (event.getPlayer().getActivePotionEffects() != PotionEffectType.SPEED) {
 				flag(user);

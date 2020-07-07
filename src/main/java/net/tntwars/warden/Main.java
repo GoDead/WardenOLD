@@ -3,6 +3,7 @@ package net.tntwars.warden;
 
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.annotations.PacketHandler;
+import io.github.retrooper.packetevents.enums.ServerVersion;
 import io.github.retrooper.packetevents.event.PacketEvent;
 import io.github.retrooper.packetevents.event.PacketListener;
 import io.github.retrooper.packetevents.event.impl.*;
@@ -14,6 +15,7 @@ import net.tntwars.warden.command.WardenCommand;
 import net.tntwars.warden.detection.combat.criticals.CriticalsA;
 import net.tntwars.warden.detection.combat.criticals.CriticalsB;
 import net.tntwars.warden.detection.combat.killaura.*;
+import net.tntwars.warden.detection.combat.reach.ReachA;
 import net.tntwars.warden.detection.movement.flight.*;
 import net.tntwars.warden.detection.movement.highjump.HighJumpA;
 import net.tntwars.warden.detection.movement.jesus.JesusA;
@@ -35,7 +37,10 @@ import net.tntwars.warden.events.PublicCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
 import net.tntwars.warden.playerdata.PlayerDataManager;
 import net.tntwars.warden.utils.MovementProcessor;
+import net.tntwars.warden.utils.UpdateChecker;
+import net.tntwars.warden.utils.Version;
 import org.bukkit.plugin.Plugin;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.plugin.SimplePlugin;
 
 import java.util.UUID;
@@ -45,13 +50,68 @@ public final class Main extends SimplePlugin implements PacketListener {
 	private static CheckManager checkManager;
 	private static PlayerDataManager playerDataManager;
 
+	Version version;
+
+	@Override
+	protected void onPluginPreStart() {
+		Common.log("&6Checking for updates...");
+		new UpdateChecker(this, 80393).getVersion(version -> {
+			String cVersion = getVersion();
+			String lVersion = version;
+			cVersion = cVersion.replace("B", "");
+			lVersion = lVersion.replace("B", "");
+			cVersion = cVersion.replace("R", "");
+			lVersion = lVersion.replace("R", "");
+			cVersion = cVersion.replace(".", "");
+			lVersion = lVersion.replace(".", "");
+			int currentVersion = Integer.parseInt(cVersion);
+			int latestVersion = Integer.parseInt(lVersion);
+			int difference = currentVersion - latestVersion;
+			if (difference < 0) {
+				Common.log("&c" + Common.consoleLineSmooth());
+				Common.log("\n&cWarning!");
+				Common.log("\n&fWarden is out of date, a new update is available!");
+				Common.log("&fPlease download the new update at:&6 https://www.spigotmc.org/resources/warden-guardian-of-your-server-simple-cheat-detection-1-8-1-16.80393/");
+				Common.log("\n&c" + Common.consoleLineSmooth());
+			} else if (difference == 0) {
+				Common.log("&aWarden is up to date!");
+				Common.log(cVersion + " " + lVersion);
+			} else if (difference > 0) {
+				Common.log("&6Whhhat are you living in the future? You are " + difference + " versions ahead!");
+			}
+		});
+		String version = getServer().getVersion();
+		ServerVersion.getVersion();
+		if (version.contains("1.8"))
+			this.version = Version.V1_8;
+		else if (version.contains("1.9"))
+			this.version = Version.V1_9;
+		if (version.contains("1.10"))
+			this.version = Version.V1_10;
+		else if (version.contains("1.11"))
+			this.version = Version.V1_11;
+		else if (version.contains("1.12"))
+			this.version = Version.V1_12;
+		else if (version.contains("1.13"))
+			this.version = Version.V1_13;
+		else if (version.contains("1.14"))
+			this.version = Version.V1_14;
+		else if (version.contains("1.15"))
+			this.version = Version.V1_15;
+		else if (version.contains("1.16"))
+			this.version = Version.V1_16;
+		Common.log("&6Server Version " + this.version.getName());
+		Common.log("&6Running Warden B" + getVersion());
+	}
+
 	@Override
 	protected void onPluginStart() {
+		Common.log("&6Enabling Checks...");
 		registerEvents(new MovementProcessor());
 		registerCommand(new AlertCommand());
 		registerCommands("warden", new WardenCommand());
-
 		start(this);
+		Common.log("&6Finished Loading.");
 	}
 
 	@Override
@@ -96,12 +156,12 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new KillAuraD(data));
 		getCheckManager().addCheck(new KillAuraE(data));
 		getCheckManager().addCheck(new KillAuraF(data));
+		getCheckManager().addCheck(new ReachA(data));
 		getCheckManager().addCheck(new FastBowA(data));
 		getCheckManager().addCheck(new FastBowB(data));
 		getCheckManager().addCheck(new BadPacketsA(data));
 		getCheckManager().addCheck(new TimerA(data));
 		getCheckManager().addCheck(new VelocityA(data));
-
 		registerEvents(new FastBowA(data));
 		registerEvents(new FastBowB(data));
 
@@ -159,6 +219,10 @@ public final class Main extends SimplePlugin implements PacketListener {
 
 	public static PlayerDataManager getPlayerDataManager() {
 		return playerDataManager == null ? playerDataManager = new PlayerDataManager() : playerDataManager;
+	}
+
+	public Version getServerVersion() {
+		return version;
 	}
 
 	/*public static Main getInstance() {

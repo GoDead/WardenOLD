@@ -1,10 +1,12 @@
 package net.tntwars.warden.check.api;
 
+import net.tntwars.warden.Main;
 import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.CheckEvent;
 import net.tntwars.warden.events.PrivateCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
 import net.tntwars.warden.utils.Flag;
+import org.bukkit.Bukkit;
 
 public abstract class PrivateCheck extends Check {
 	private final PlayerData playerData;
@@ -28,7 +30,7 @@ public abstract class PrivateCheck extends Check {
 	}
 
 	public void flag() {
-		Flag.flag(getPlayerData(), this);
+		Bukkit.getScheduler().runTask(Main.getInstance(), () -> Flag.flag(getPlayerData(), this));
 	}
 
 	public void comply() {
