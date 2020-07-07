@@ -8,7 +8,6 @@ import net.tntwars.warden.check.api.data.Category;
 import net.tntwars.warden.events.PrivateCheckEvent;
 import net.tntwars.warden.playerdata.PlayerData;
 import net.tntwars.warden.utils.Compatibility;
-import net.tntwars.warden.utils.ConfigManager;
 import net.tntwars.warden.utils.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,7 +29,6 @@ public class FlightF extends PrivateCheck {
 
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent event) {
-		if (!ConfigManager.getInstance().isFlightFEnabled()) return event;
 		if (event.getCauseEvent() instanceof PacketReceiveEvent) {
 			if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) event.getCauseEvent()).getPacketId())) {
 				PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) event.getCauseEvent()).getPlayer().getUniqueId());

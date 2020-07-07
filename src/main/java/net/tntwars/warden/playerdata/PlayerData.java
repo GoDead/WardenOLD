@@ -26,6 +26,7 @@ public final class PlayerData {
 	private double deltaXZ, deltaY;
 	private boolean isSprinting, isSneaking, onGround;
 	private long timeSinceJoin;
+	private long previousPreviousHit, previousHit, currentHit;
 
 	private final Map<Class<?>, Integer> violations = new HashMap<>();
 
@@ -153,6 +154,32 @@ public final class PlayerData {
 	public void setTimeSinceJoin(long timeSinceJoin) {
 		this.timeSinceJoin = timeSinceJoin;
 	}
+
+	public long getPreviousHit() {
+		return previousHit;
+	}
+
+	public void setPreviousHit(long previousHit) {
+		this.previousHit = previousHit;
+	}
+
+	public long getPreviousPreviousHit() {
+		return previousPreviousHit;
+	}
+
+	public void setPreviousPreviousHit(long previousPreviousHit) {
+		this.previousPreviousHit = previousPreviousHit;
+	}
+
+
+	public long getCurrentHit() {
+		return currentHit;
+	}
+
+	public void setCurrentHit(long currentHit) {
+		this.currentHit = currentHit;
+	}
+
 
 	public UUID getUniqueId() {
 		return uuid;
