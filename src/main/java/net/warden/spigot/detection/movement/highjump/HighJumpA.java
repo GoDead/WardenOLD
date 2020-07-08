@@ -1,0 +1,40 @@
+package net.warden.spigot.detection.movement.highjump;
+
+import io.github.retrooper.packetevents.event.impl.BukkitMoveEvent;
+import net.warden.spigot.Main;
+import net.warden.spigot.check.api.PublicCheck;
+import net.warden.spigot.check.api.data.Category;
+import net.warden.spigot.events.PublicCheckEvent;
+import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
+import net.warden.spigot.utils.ConfigManager;
+import org.bukkit.potion.PotionEffectType;
+
+public class HighJumpA extends PublicCheck {
+	public HighJumpA() {
+		super("HighJump", 'A', Category.MOVEMENT);
+	}
+
+	@Override
+	public PublicCheckEvent onCheck(PublicCheckEvent e) {
+		if (!ConfigManager.getInstance().isHighJumpAEnabled()) return e;
+		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
+			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
+			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
+			if (event.getPlayer().getLocation().getBlock().isLiquid()) return e;
+			if (event.getPlayer().hasPotionEffect(PotionEffectType.JUMP)) return e;
+			final double offsetY = event.getTo().getY() - event.getFrom().getY();
+			if (event.getPlayer().isOnGround()) return e;
+			if (offsetY > 0.55) {
+				if (!Compatibility.isLegitVersion(event.getPlayer()))
+					flag(user);
+			} else {
+				if (user.getVLCount(this) <= 0)
+					user.setVLCount(this, 0);
+				if (user.getVLCount(this) > 0)
+					user.decrementVL(this);
+			}
+		}
+		return e;
+	}
+}
