@@ -19,6 +19,7 @@ public class FlightD extends PublicCheck {
 	public PublicCheckEvent onCheck(PublicCheckEvent event) {
 		if (!ConfigManager.getInstance().isFlightDEnabled()) return event;
 		if (event.getCauseEvent() instanceof BukkitMoveEvent) {
+			if (Compatibility.isInSpectator(((BukkitMoveEvent) event.getCauseEvent()).getPlayer())) return event;
 			BukkitMoveEvent event1 = (BukkitMoveEvent) event.getCauseEvent();
 			final double offsetY = event1.getTo().getY() - event1.getFrom().getY();
 			Player player = event1.getPlayer();

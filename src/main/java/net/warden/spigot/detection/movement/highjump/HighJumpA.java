@@ -19,13 +19,16 @@ public class HighJumpA extends PublicCheck {
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		if (!ConfigManager.getInstance().isHighJumpAEnabled()) return e;
 		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
+			if (Compatibility.isInSpectator(((BukkitMoveEvent) e.getCauseEvent()).getPlayer())) return e;
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
+			if (Compatibility.isLegitVersion(((BukkitMoveEvent) e.getCauseEvent()).getPlayer()))
+				return e;
 			if (event.getPlayer().getLocation().getBlock().isLiquid()) return e;
 			if (event.getPlayer().hasPotionEffect(PotionEffectType.JUMP)) return e;
-			final double offsetY = event.getTo().getY() - event.getFrom().getY();
+			final double deltaY = event.getTo().getY() - event.getFrom().getY();
 			if (event.getPlayer().isOnGround()) return e;
-			if (offsetY > 0.55) {
+			if (deltaY > 0.55) {
 				if (!Compatibility.isLegitVersion(event.getPlayer()))
 					flag(user);
 			} else {

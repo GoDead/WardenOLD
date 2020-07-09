@@ -8,6 +8,7 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -22,15 +23,17 @@ public class KillAuraE extends PrivateCheck {
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
 		if (!(ConfigManager.getInstance().isKillAuraEEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
 				WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
 				if (packet.getAction() != EntityUseAction.ATTACK) return e;
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				Entity entity = packet.getEntity();
-				if (!getNotLookingAt(player, entity)) {
-					flag();
+				if (entity.getLocation().toVector().distance(player.getLocation().toVector()) > 1) {
+					if (!getNotLookingAt(player, entity)) {
+						flag();
+					}
 				}
-
 			}
 		}
 		return e;

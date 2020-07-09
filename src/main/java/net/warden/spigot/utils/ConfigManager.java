@@ -166,6 +166,16 @@ public class ConfigManager extends YamlConfig {
 	private boolean badPacketsBBannable;
 	private String badPacketsBPunish;
 
+	private boolean badPacketsCEnabled;
+	private int badPacketsCMaxVL;
+	private boolean badPacketsCBannable;
+	private String badPacketsCPunish;
+
+	private boolean badPacketsDEnabled;
+	private int badPacketsDMaxVL;
+	private boolean badPacketsDBannable;
+	private String badPacketsDPunish;
+
 	//GROUNDSPOOF
 	private boolean groundSpoofAEnabled;
 	private int groundSpoofAMaxVL;
@@ -368,6 +378,16 @@ public class ConfigManager extends YamlConfig {
 		badPacketsBBannable = getOrSetDefault("BadPacketsB.bannable", true);
 		badPacketsBPunish = getOrSetDefault("BadPacketsB.punish", "ban %player%");
 
+		badPacketsCEnabled = getOrSetDefault("BadPacketsC.enabled", true);
+		badPacketsCMaxVL = getOrSetDefault("BadPacketsC.maxVl", 15);
+		badPacketsCBannable = getOrSetDefault("BadPacketsC.bannable", true);
+		badPacketsCPunish = getOrSetDefault("BadPacketsC.punish", "ban %player%");
+
+		badPacketsDEnabled = getOrSetDefault("BadPacketsD.enabled", true);
+		badPacketsDMaxVL = getOrSetDefault("BadPacketsD.maxVl", 15);
+		badPacketsDBannable = getOrSetDefault("BadPacketsD.bannable", true);
+		badPacketsDPunish = getOrSetDefault("BadPacketsD.punish", "ban %player%");
+
 		//GROUNDSPOOF
 		groundSpoofAEnabled = getOrSetDefault("GroundSpoofA.enabled", true);
 		groundSpoofAMaxVL = getOrSetDefault("GroundSpoofA.maxVl", 15);
@@ -560,6 +580,16 @@ public class ConfigManager extends YamlConfig {
 				"BadPacketsB.maxVl", badPacketsBMaxVL,
 				"BadPacketsB.bannable", badPacketsBBannable,
 				"BadPacketsB.punish", badPacketsBPunish,
+
+				"BadPacketsC.enabled", badPacketsCEnabled,
+				"BadPacketsC.maxVl", badPacketsCMaxVL,
+				"BadPacketsC.bannable", badPacketsCBannable,
+				"BadPacketsC.punish", badPacketsCPunish,
+
+				"BadPacketsD.enabled", badPacketsDEnabled,
+				"BadPacketsD.maxVl", badPacketsDMaxVL,
+				"BadPacketsD.bannable", badPacketsDBannable,
+				"BadPacketsD.punish", badPacketsDPunish,
 
 				//GROUNDSPOOF
 				"GroundSpoofA.enabled", groundSpoofAEnabled,

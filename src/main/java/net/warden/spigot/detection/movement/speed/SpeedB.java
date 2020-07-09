@@ -9,6 +9,7 @@ import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.GameMode;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -21,14 +22,16 @@ public class SpeedB extends PublicCheck {
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		if (!ConfigManager.getInstance().isSpeedBEnabled()) return e;
 		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
+			if (Compatibility.isInSpectator(((BukkitMoveEvent) e.getCauseEvent()).getPlayer())) return e;
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 			if (event.getPlayer().hasPotionEffect(PotionEffectType.SPEED)) return e;
 			if (event.getPlayer().getGameMode() == GameMode.CREATIVE) return e;
-			if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) return e;
 			long time = System.currentTimeMillis() - user.getTimeSinceDamage();
 			if (time < 2000) return e;
-			if (event.getPlayer().getAllowFlight())
+			long flight = System.currentTimeMillis() - user.getLastFlight();
+			if (flight < 5000) return e;
+			if (event.getPlayer().isFlying())
 				return e;
 			if (Compatibility.isLegitVersion(event.getPlayer()))
 				return e;
@@ -40,7 +43,15 @@ public class SpeedB extends PublicCheck {
 			Vector to = event.getTo().toVector().clone().setY(0);
 			double speedSquared = to.distanceSquared(from);
 			if (speedSquared * 10 > 4) {
-				flag(user);
+				if (!event.getPlayer().hasPotionEffect(PotionEffectType.SPEED)) {
+					flag(user);
+				} else {
+					PotionEffect effect = event.getPlayer().getPotionEffect(PotionEffectType.SPEED);
+					if (effect.getAmplifier() < 4) {
+						if (!event.getPlayer().getLocation().clone().add(0, 2, 0).getBlock().getType().isSolid())
+							flag(user);
+					}
+				}
 			}
 		}
 		return e;

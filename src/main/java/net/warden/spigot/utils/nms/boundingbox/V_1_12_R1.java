@@ -17,8 +17,10 @@ public class V_1_12_R1 {
 
 	public V_1_12_R1(Entity entity) {
 		AxisAlignedBB bb = ((CraftEntity) entity).getHandle().getBoundingBox();
-		min = new Vector(bb.a, bb.b, bb.c);
-		max = new Vector(bb.d, bb.e, bb.f);
+		//Common.broadcast(bb.a + "");
+		min = new Vector(bb.a - 0.03, bb.b - 0.3, bb.c - 0.03);
+		max = new Vector(bb.d + 0.03, bb.e + 0.4, bb.f + 0.03);
+		//Common.broadcast("&e" + min + "\n &c" + max);
 	}
 
 	public V_1_12_R1(AxisAlignedBB bb) {

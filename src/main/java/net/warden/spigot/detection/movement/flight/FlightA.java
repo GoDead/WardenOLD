@@ -25,12 +25,12 @@ public class FlightA extends PrivateCheck {
 	public PrivateCheckEvent onCheck(final PrivateCheckEvent event) {
 		if (!ConfigManager.getInstance().isFlightAEnabled()) return event;
 		if (event.getCauseEvent() instanceof BukkitMoveEvent) {
+			if (Compatibility.isInSpectator(((BukkitMoveEvent) event.getCauseEvent()).getPlayer())) return event;
 			BukkitMoveEvent moveEvent = (BukkitMoveEvent) event.getCauseEvent();
 			Location to = moveEvent.getTo();
 			Location from = moveEvent.getFrom();
 			Player player = moveEvent.getPlayer();
 			if (Compatibility.isLegitVersion(player)) return event;
-			if (!ConfigManager.getInstance().isFlightAEnabled()) return event;
 			if (moveEvent.getPlayer().getVelocity().length() < 0.6) return event;
 			if (from.getY() > to.getY()) return event;
 			if (from.getBlock() == to.getBlock()) return event;

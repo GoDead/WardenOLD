@@ -8,6 +8,7 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.event.Listener;
 
@@ -25,6 +26,7 @@ public class TimerA extends PrivateCheck implements Listener {
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
 		if (!ConfigManager.getInstance().isTimerAEnabled()) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			int packetId = ((PacketReceiveEvent) e.getCauseEvent()).getPacketId();
 			PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			if (PacketType.Client.Util.isInstanceOfFlying(packetId)) {

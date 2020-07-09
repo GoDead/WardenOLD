@@ -15,6 +15,7 @@ import net.warden.spigot.detection.movement.speed.SpeedA;
 import net.warden.spigot.detection.movement.speed.SpeedB;
 import net.warden.spigot.detection.player.badpackets.BadPacketsA;
 import net.warden.spigot.detection.player.badpackets.BadPacketsB;
+import net.warden.spigot.detection.player.badpackets.BadPacketsC;
 import net.warden.spigot.detection.player.fastbow.FastBowA;
 import net.warden.spigot.detection.player.fastbow.FastBowB;
 import net.warden.spigot.detection.player.timer.TimerA;
@@ -153,7 +154,8 @@ public class Violation extends SimpleSubCommand {
 
 	private int getBadPacketsVL(PlayerData user) {
 		int VL = user.getViolationsMap().getOrDefault(BadPacketsA.class, 0)
-				+ user.getViolationsMap().getOrDefault(BadPacketsB.class, 0);
+				+ user.getViolationsMap().getOrDefault(BadPacketsB.class, 0)
+				+ user.getViolationsMap().getOrDefault(BadPacketsC.class, 0);
 		return VL;
 	}
 

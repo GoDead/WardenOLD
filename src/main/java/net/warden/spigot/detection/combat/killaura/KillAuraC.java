@@ -10,6 +10,7 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 
 public class KillAuraC extends PrivateCheck {
@@ -24,6 +25,7 @@ public class KillAuraC extends PrivateCheck {
 		if (!ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return e;
 		if (!(ConfigManager.getInstance().isKillAuraCEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.ARM_ANIMATION) {
 				lastSwing = System.currentTimeMillis();
 			} else if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
@@ -33,7 +35,7 @@ public class KillAuraC extends PrivateCheck {
 				}
 				long time = System.currentTimeMillis() - lastSwing;
 				if (time != 0 && time != 1) {
-					if (PacketEvents.getAPI().getPlayerUtilities().getPing(((PacketReceiveEvent) e.getCauseEvent()).getPlayer()) < 100) {
+					if (PacketEvents.getAPI().getPlayerUtilities().getPing(((PacketReceiveEvent) e.getCauseEvent()).getPlayer()) < 30) {
 						flag();
 					} else {
 						comply();

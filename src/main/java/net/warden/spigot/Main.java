@@ -18,6 +18,7 @@ import net.warden.spigot.detection.combat.killaura.*;
 import net.warden.spigot.detection.combat.reach.ReachA;
 import net.warden.spigot.detection.movement.flight.*;
 import net.warden.spigot.detection.movement.highjump.HighJumpA;
+import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementA;
 import net.warden.spigot.detection.movement.jesus.JesusA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofB;
@@ -27,6 +28,7 @@ import net.warden.spigot.detection.movement.speed.SpeedA;
 import net.warden.spigot.detection.movement.speed.SpeedB;
 import net.warden.spigot.detection.player.badpackets.BadPacketsA;
 import net.warden.spigot.detection.player.badpackets.BadPacketsB;
+import net.warden.spigot.detection.player.badpackets.BadPacketsC;
 import net.warden.spigot.detection.player.fastbow.FastBowA;
 import net.warden.spigot.detection.player.fastbow.FastBowB;
 import net.warden.spigot.detection.player.timer.TimerA;
@@ -84,6 +86,8 @@ public final class Main extends SimplePlugin implements PacketListener {
 		});
 		String version = getServer().getVersion();
 		ServerVersion.getVersion();
+		if (version.contains("1.7"))
+			this.version = Version.V1_7;
 		if (version.contains("1.8"))
 			this.version = Version.V1_8;
 		else if (version.contains("1.9"))
@@ -102,6 +106,8 @@ public final class Main extends SimplePlugin implements PacketListener {
 			this.version = Version.V1_15;
 		else if (version.contains("1.16"))
 			this.version = Version.V1_16;
+		else
+			this.version = Version.UNKNOWN;
 		Common.log("&6Server Version " + this.version.getName());
 		Common.log("&6Running Warden B" + getVersion());
 	}
@@ -110,7 +116,7 @@ public final class Main extends SimplePlugin implements PacketListener {
 	protected void onPluginStart() {
 		Common.log("&6Enabling Checks...");
 		registerEvents(new MovementProcessor());
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "WardenAlerts");
+		getServer().getMessenger().registerOutgoingPluginChannel(this, "warden:alerts");
 		registerCommand(new AlertCommand());
 		registerCommands("warden", new WardenCommand());
 		start(this);
@@ -125,6 +131,8 @@ public final class Main extends SimplePlugin implements PacketListener {
 	public void start(Plugin plugin) {
 		PacketEvents.start(plugin);
 		PacketEvents.getAPI().getEventManager().registerListener(this);
+		PacketEvents.getAPI().getEventManager().registerListener(new MovementProcessor());
+		registerEvents(new BadPacketsC());
 		getCheckManager().addCheck(new FlightB());
 		getCheckManager().addCheck(new FlightD());
 		getCheckManager().addCheck(new FlightE());
@@ -134,9 +142,9 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new SpeedB());
 		getCheckManager().addCheck(new HighJumpA());
 		getCheckManager().addCheck(new ScaffoldA());
-		getCheckManager().addCheck(new ScaffoldB());
 		getCheckManager().addCheck(new CriticalsA());
 		getCheckManager().addCheck(new CriticalsB());
+		registerEvents(new CriticalsB());
 		getCheckManager().addCheck(new BadPacketsB());
 	}
 
@@ -157,10 +165,14 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new KillAuraB(data));
 		getCheckManager().addCheck(new KillAuraC(data));
 		getCheckManager().addCheck(new KillAuraD(data));
+		registerEvents(new KillAuraD(data));
 		getCheckManager().addCheck(new KillAuraE(data));
 		getCheckManager().addCheck(new KillAuraF(data));
 		getCheckManager().addCheck(new KillAuraG(data));
 		getCheckManager().addCheck(new KillAuraH(data));
+		getCheckManager().addCheck(new ScaffoldB(data));
+		registerEvents(new ScaffoldB(data));
+		getCheckManager().addCheck(new InvalidMovementA(data));
 		getCheckManager().addCheck(new ReachA(data));
 		getCheckManager().addCheck(new FastBowA(data));
 		getCheckManager().addCheck(new FastBowB(data));

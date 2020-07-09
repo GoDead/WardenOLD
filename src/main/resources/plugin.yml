@@ -1,4 +1,6 @@
 name: Warden
-version: 0.6.5
+version: 0.7.2
 main: net.warden.spigot.Main
 author: GoDead
+softdepend:
+  - BungeeChatAPI

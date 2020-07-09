@@ -30,7 +30,6 @@ public abstract class PrivateCheck extends Check {
 	}
 
 	public void flag() {
-
 		Bukkit.getScheduler().runTask(Main.getInstance(), () -> Flag.flag(getPlayerData(), this));
 	}
 

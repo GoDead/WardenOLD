@@ -15,7 +15,7 @@ public class Main extends Plugin {
 	public void onEnable() {
 		instance = this;
 		getProxy().getPluginManager().registerCommand(this, new AlertCommand());
-		getProxy().registerChannel("WardenAlerts");
+		getProxy().registerChannel("warden:alerts");
 		getProxy().getPluginManager().registerListener(this, new JoinEvent());
 		getProxy().getPluginManager().registerListener(this, new Alert());
 	}

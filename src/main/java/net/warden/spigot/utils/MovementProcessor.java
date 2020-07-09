@@ -20,7 +20,7 @@ public class MovementProcessor implements PacketListener, Listener {
 	public static void process(PacketReceiveEvent event) {
 		PlayerData data = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 		if (data != null) {
-			if (PlayerUtils.onGround(data)) {
+			if (PlayerUtils.onGround(event.getPlayer())) {
 				data.setOnGround(true);
 			} else data.setOnGround(false);
 
@@ -28,10 +28,10 @@ public class MovementProcessor implements PacketListener, Listener {
 			data.setLocation(event.getPlayer().getLocation());
 
 			if (PacketType.Client.Util.isInstanceOfFlying((event.getPacketId()))) {
-				//data.setDeltaXZ(data.getLocation().toVector().setY(0).distance(data.getLastLocation().toVector()));
-				//data.setDeltaY(data.getLocation().getY() - data.getLastLocation().getY());
-				data.setDeltaXZ(data.getTo().toVector().setY(0).distance(data.getFrom().toVector()));
-				data.setDeltaY(data.getTo().getY() - data.getFrom().getY());
+				data.setDeltaXZ(data.getLocation().toVector().setY(0).distance(data.getLastLocation().toVector().setY(0)));
+				data.setDeltaY(data.getLocation().getY() - data.getLastLocation().getY());
+				//data.setDeltaXZ(data.getTo().toVector().setY(0).distance(data.getFrom().toVector().setY(0)));
+				//data.setDeltaY(data.getTo().getY() - data.getFrom().getY());
 			}
 
 			if (event.getPacketId() == (PacketType.Client.ENTITY_ACTION)) {
@@ -57,6 +57,9 @@ public class MovementProcessor implements PacketListener, Listener {
 		PlayerData data = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 		data.setTo(event.getTo());
 		data.setFrom(event.getFrom());
+		if (event.getFrom().getBlock().isLiquid() || event.getTo().getBlock().isLiquid()) {
+			data.setLastInWater(System.currentTimeMillis());
+		}
 	}
 
 	@EventHandler

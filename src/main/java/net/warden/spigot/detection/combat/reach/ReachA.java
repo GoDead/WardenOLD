@@ -7,10 +7,12 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class ReachA extends PrivateCheck {
@@ -22,9 +24,11 @@ public class ReachA extends PrivateCheck {
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
 		if (!(ConfigManager.getInstance().isReachAEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
 				WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
 				Entity victim = packet.getEntity();
+				if (!(victim instanceof Player)) return e;
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				Vector attackerPos;
 				if (player.isInsideVehicle()) {
@@ -34,9 +38,12 @@ public class ReachA extends PrivateCheck {
 					attackerPos = player.getEyeLocation().toVector();
 				}
 				double maxReach = player.getGameMode() == GameMode.CREATIVE ? 6.0 : 4.4;
+				if (attackerPos == null) return e;
+				if (victim.getLocation() == null) return e;
 				double dist = distanceToPosition(attackerPos, victim.getLocation().toVector());
 				if (dist > maxReach) {
-					flag();
+					if (!player.hasPotionEffect(PotionEffectType.SPEED))
+						flag();
 				}
 			}
 		}

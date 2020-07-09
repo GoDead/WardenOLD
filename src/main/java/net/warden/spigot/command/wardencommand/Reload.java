@@ -13,6 +13,7 @@ public class Reload extends SimpleSubCommand {
 	public Reload(final SimpleCommandGroup parent) {
 		super(parent, "reload");
 		setPermission("warden.reload");
+		setDescription("Reload all Warden configuration files");
 		setAliases(new ArrayList<>(Arrays.asList("rl")));
 	}
 

@@ -1,8 +1,12 @@
 package net.warden.spigot.utils;
 
 import io.github.retrooper.packetevents.enums.ServerVersion;
+import net.warden.spigot.Main;
+import net.warden.spigot.playerdata.PlayerData;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.mineacademy.fo.region.Region;
@@ -15,6 +19,10 @@ public class Compatibility {
 	public static class V_1_9 {
 		public static boolean isGliding(Player player) {
 			if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return false;
+			if (player.isGliding()) {
+				PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
+				user.setLastFlight(System.currentTimeMillis());
+			}
 			return player.isGliding();
 		}
 	}
@@ -52,6 +60,16 @@ public class Compatibility {
 		}
 	}
 
+	public static class V_1_16 {
+		public static boolean hasSoulSpeed(Player player) {
+			if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_16_1)) return false;
+			if (player.getInventory().getBoots() == null) return false;
+			if (player.getInventory().getBoots().containsEnchantment(Enchantment.SOUL_SPEED))
+				return true;
+			return false;
+		}
+	}
+
 	public static boolean isLegitVersion(Player player) {
 		List<Boolean> list = new ArrayList<>();
 		list.add(V_1_9.isGliding(player));
@@ -59,7 +77,16 @@ public class Compatibility {
 		list.add(V_1_13.isRiptiding(player));
 		list.add(V_1_14.isNearBerryBush(player.getLocation()));
 		list.add(V_1_15.isNearHoney(player.getLocation()));
+		list.add(V_1_16.hasSoulSpeed(player));
 		//player.sendMessage(Common.colorize("&c" + !list.contains(true)));
 		return list.contains(true);
+	}
+
+	public static boolean isInSpectator(Player player) {
+		if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_8)) return false;
+		if (player.getGameMode() == GameMode.SPECTATOR) {
+			return true;
+		}
+		return false;
 	}
 }

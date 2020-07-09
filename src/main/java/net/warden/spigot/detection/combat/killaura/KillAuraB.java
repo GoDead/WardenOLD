@@ -1,6 +1,7 @@
 package net.warden.spigot.detection.combat.killaura;
 
 import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.enums.ServerVersion;
 import io.github.retrooper.packetevents.enums.minecraft.EntityUseAction;
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
 import io.github.retrooper.packetevents.packet.PacketType;
@@ -9,6 +10,7 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.entity.Player;
 
@@ -22,8 +24,10 @@ public class KillAuraB extends PrivateCheck {
 
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
+		if (!ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return e;
 		if (!(ConfigManager.getInstance().isKillAuraBEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
 				WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
 				if (packet.getAction() != EntityUseAction.ATTACK) return e;
@@ -32,6 +36,9 @@ public class KillAuraB extends PrivateCheck {
 				if (PacketEvents.getAPI().getPlayerUtilities().getPing(player) > 100) return e;
 				if (Math.abs(elapsed) < Math.abs(40)) {
 					flag();
+				} else {
+					if (getVL() > 0)
+						comply();
 				}
 			} else if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) e.getCauseEvent()).getPacketId())) {
 				lastFlying = e.getTimestamp();

@@ -7,6 +7,7 @@ import net.warden.spigot.check.api.PublicCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PublicCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -26,13 +27,11 @@ public class CriticalsB extends PublicCheck implements Listener {
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		if (!(ConfigManager.getInstance().isCriticalsAEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
 				if (player.isInsideVehicle())
-					return e;
-
-				if (!player.getGameMode().equals(GameMode.SURVIVAL) && !player.getGameMode().equals(GameMode.ADVENTURE))
 					return e;
 				if (!player.isOnGround() && user.isOnGround()) {
 					if (isOnGround.containsKey(user)) {

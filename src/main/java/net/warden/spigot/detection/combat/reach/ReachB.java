@@ -10,6 +10,7 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.nms.RayTrace;
 import net.warden.spigot.utils.nms.boundingbox.*;
 import org.bukkit.Location;
@@ -30,6 +31,7 @@ public class ReachB extends PrivateCheck {
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
 		//if (!(ConfigManager.getInstance().isReachEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() != PacketType.Client.USE_ENTITY) return e;
 			PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());

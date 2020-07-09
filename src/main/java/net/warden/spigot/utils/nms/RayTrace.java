@@ -63,6 +63,26 @@ public class RayTrace {
 		return false;
 	}
 
+	public Vector positionOfIntersection(V_1_7_R4 boundingBox, double blocksAway, double accuracy) {
+		ArrayList<Vector> positions = traverse(blocksAway, accuracy);
+		for (Vector position : positions) {
+			if (intersects(position, boundingBox.min, boundingBox.max)) {
+				return position;
+			}
+		}
+		return null;
+	}
+
+	public boolean intersects(V_1_7_R4 boundingBox, double blocksAway, double accuracy) {
+		ArrayList<Vector> positions = traverse(blocksAway, accuracy);
+		for (Vector position : positions) {
+			if (intersects(position, boundingBox.min, boundingBox.max)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Vector positionOfIntersection(V_1_8_R1 boundingBox, double blocksAway, double accuracy) {
 		ArrayList<Vector> positions = traverse(blocksAway, accuracy);
 		for (Vector position : positions) {
@@ -342,5 +362,4 @@ public class RayTrace {
 			world.playEffect(position.toLocation(world), Effect.SMOKE, 0);
 		}
 	}
-
 }

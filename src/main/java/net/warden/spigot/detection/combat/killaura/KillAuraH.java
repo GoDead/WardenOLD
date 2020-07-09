@@ -10,6 +10,7 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import net.warden.spigot.utils.nms.RayTrace;
 import net.warden.spigot.utils.nms.boundingbox.*;
@@ -33,6 +34,7 @@ public class KillAuraH extends PrivateCheck {
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
 		if (!(ConfigManager.getInstance().isKillAuraHEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() != PacketType.Client.USE_ENTITY) return e;
 			PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
@@ -45,8 +47,16 @@ public class KillAuraH extends PrivateCheck {
 				Location position = positions.get(i).toLocation(player.getWorld());
 				Block block = player.getWorld().getBlockAt(position);
 				Entity entity = packet.getEntity();
-
-				if (ServerVersion.getVersion().equals(ServerVersion.v_1_8))
+				if (entity.getLocation().toVector().distance(player.getLocation().toVector()) < 1) return e;
+				if (ServerVersion.getVersion().equals(ServerVersion.v_1_7_10))
+					if (entity != null && rayTrace.intersects(new V_1_7_R4(entity), 5, 0.01)) {
+						flagSafe(false);
+						break;
+					} else {
+						flagSafe(true);
+						break;
+					}
+				else if (ServerVersion.getVersion().equals(ServerVersion.v_1_8))
 					if (entity != null && /*block.getType() != Material.AIR &&*/ rayTrace.intersects(new V_1_8_R1(entity), 5, 0.01)) {
 						flagSafe(false);
 						break;
@@ -54,7 +64,7 @@ public class KillAuraH extends PrivateCheck {
 						flagSafe(true);
 						break;
 					}
-				if (ServerVersion.getVersion().equals(ServerVersion.v_1_8_3))
+				else if (ServerVersion.getVersion().equals(ServerVersion.v_1_8_3))
 					if (entity != null && rayTrace.intersects(new V_1_8_R2(entity), 5, 0.01)) {
 						flagSafe(false);
 						break;
@@ -173,6 +183,7 @@ public class KillAuraH extends PrivateCheck {
 			System.out.println("CLEARED");
 			list.clear();
 		}
+		//Common.broadcast(list.toString());
 		if (isHacking(list))
 			flag();
 	}
@@ -180,11 +191,13 @@ public class KillAuraH extends PrivateCheck {
 	private boolean isHacking(List<Boolean> list) {
 		if (list.isEmpty()) return false;
 		if (list.size() < 5) return false;
-		if (/*list.get(5) &&*/ list.get(4) && list.get(3) && list.get(2) && list.get(1))
+		if (/*list.get(7) && list.get(6) && list.get(5) &&*/ list.get(4) && list.get(3) && list.get(2) && list.get(1) && list.get(0))
 			return true;
-		else if (!list.get(4) && !list.get(3) && !list.get(2) && !list.get(1))
+		else if (/*!list.get(7) && !list.get(6) && !list.get(5) &&*/ !list.get(4) && !list.get(3) && !list.get(2) && !list.get(1) && list.get(0)) {
 			if (getVL() > 0)
 				comply();
+			return false;
+		}
 		return false;
 
 	}

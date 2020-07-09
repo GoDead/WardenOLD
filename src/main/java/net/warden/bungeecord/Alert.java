@@ -19,7 +19,7 @@ public class Alert implements Listener {
 	@EventHandler
 	public void onAlert(PluginMessageEvent event) {
 		if (event.isCancelled() ||
-				!event.getTag().equals("WardenAlerts") ||
+				!event.getTag().equals("warden:alerts") ||
 				!(event.getSender() instanceof net.md_5.bungee.api.connection.Server))
 			return;
 		try {
@@ -36,7 +36,7 @@ public class Alert implements Listener {
 	}
 
 	private void alert(ProxiedPlayer player, String check, String type, int vl) {
-		TextComponent component = new TextComponent(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "Warden" + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE + player.getName() + ChatColor.GRAY + " is suspected of " + ChatColor.YELLOW + check + ChatColor.GRAY + " (Type " + type + ")" + ChatColor.RED + "x" + (int) vl + ChatColor.GRAY + " on: " + player.getServer().getInfo().getName().toUpperCase());
+		TextComponent component = new TextComponent(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "Warden" + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE + player.getName() + ChatColor.GRAY + " is suspected of " + ChatColor.YELLOW + check + ChatColor.GRAY + " (Type " + type + ")" + ChatColor.RED + " x" + (int) vl + ChatColor.GRAY + " on: " + player.getServer().getInfo().getName().toUpperCase());
 		for (ProxiedPlayer proxy : Main.getInstance().getProxy().getPlayers()) {
 			if (proxy.hasPermission("warden.alerts")) {
 				proxy.sendMessage((BaseComponent) component);

@@ -2,6 +2,8 @@ package net.warden.spigot.utils;
 
 public enum Version {
 
+	UNKNOWN("Unknown", (byte) 0),
+	V1_7("1.7", (byte) 7),
 	V1_8("1.8", (byte) 8),
 	V1_9("1.9", (byte) 9),
 	V1_10("1.10", (byte) 10),

@@ -5,6 +5,8 @@ import lombok.Getter;
 import org.mineacademy.fo.collection.SerializedMap;
 import org.mineacademy.fo.settings.YamlConfig;
 
+import java.util.List;
+
 
 @Getter(AccessLevel.PUBLIC)
 public class SettingsManager extends YamlConfig {
@@ -14,9 +16,27 @@ public class SettingsManager extends YamlConfig {
 
 	public void setBungeeCordAlerts(boolean bungeeCordAlerts) {
 		this.bungeeCordAlerts = bungeeCordAlerts;
+		save("BungeeCordAlerts", bungeeCordAlerts);
+	}
+
+	public boolean addWorld(String world) {
+		if (this.worlds.contains(world))
+			return true;
+		this.worlds.add(world);
+		save("Excluded-Worlds", worlds);
+		return false;
+	}
+
+	public boolean removeWorld(String world) {
+		if (!this.worlds.contains(world))
+			return true;
+		this.worlds.remove(world);
+		save("Excluded-Worlds", worlds);
+		return false;
 	}
 
 	private boolean bungeeCordAlerts;
+	private List<String> worlds;
 
 
 	public SettingsManager() {
@@ -32,12 +52,14 @@ public class SettingsManager extends YamlConfig {
 	@Override
 	protected void onLoadFinish() {
 		bungeeCordAlerts = getOrSetDefault("BungeeCordAlerts", false);
+		worlds = getStringList("Excluded-Worlds");
 	}
 
 	@Override
 	public SerializedMap serialize() {
 		return SerializedMap.ofArray(
-				"BungeeCordAlerts", bungeeCordAlerts
+				"BungeeCordAlerts", bungeeCordAlerts,
+				"Excluded-Worlds", worlds
 		);
 	}
 }

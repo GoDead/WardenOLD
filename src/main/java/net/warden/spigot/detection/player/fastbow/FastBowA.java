@@ -1,8 +1,10 @@
 package net.warden.spigot.detection.player.fastbow;
 
+import net.warden.spigot.Main;
 import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,6 +24,8 @@ public class FastBowA extends PrivateCheck implements Listener {
 	@EventHandler
 	public void interactEvent(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
+		PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
+		if (user != getPlayerData()) return;
 		if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && (player.getItemInHand().getType() == Material.BOW)) {
 			fastBowTime = System.currentTimeMillis();
 		}
@@ -30,12 +34,16 @@ public class FastBowA extends PrivateCheck implements Listener {
 	@EventHandler
 	public void shoot(EntityShootBowEvent event) {
 		if (event.getEntity() instanceof Player) {
+			Player player = (Player) event.getEntity();
+			PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
+			if (user != getPlayerData()) return;
 			double force = event.getForce();
 			if (fastBowTime == 0) {
 				return;
 			}
 			if ((System.currentTimeMillis() - fastBowTime) / force < 950.0 && force > 0.85) {
 				if (!(ConfigManager.getInstance().isFastBowAEnabled())) return;
+				if (Compatibility.isInSpectator(player)) return;
 				flag();
 			}
 		}

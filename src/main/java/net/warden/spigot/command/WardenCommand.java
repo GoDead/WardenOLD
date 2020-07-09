@@ -11,6 +11,7 @@ public class WardenCommand extends SimpleCommandGroup {
 		registerSubcommand(new Support(this));
 		registerSubcommand(new Bungee(this));
 		registerSubcommand(new Reload(this));
+		registerSubcommand(new World(this));
 	}
 
 	@Override
@@ -20,6 +21,6 @@ public class WardenCommand extends SimpleCommandGroup {
 
 	@Override
 	protected boolean sendHelpIfNoArgs() {
-		return false;
+		return true;
 	}
 }

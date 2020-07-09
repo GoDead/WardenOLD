@@ -1,13 +1,12 @@
 package net.warden.spigot.utils;
 
-import net.warden.spigot.Main;
-import net.warden.spigot.playerdata.PlayerData;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class PlayerUtils {
 
-	public static boolean onGround(PlayerData player) {
-		Location location = Main.getPlayerDataManager().find(player.getUniqueId()).getLocation();
+	public static boolean onGround(Player player) {
+		Location location = player.getLocation();
 		double expand = 0.3;
 		for (double x = -expand; x <= expand; x += expand) {
 			for (double z = -expand; z <= expand; z += expand) {

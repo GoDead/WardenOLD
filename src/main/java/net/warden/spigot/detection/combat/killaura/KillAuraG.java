@@ -10,6 +10,7 @@ import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import net.warden.spigot.utils.Cooldown;
 import org.bukkit.entity.Player;
@@ -29,6 +30,7 @@ public class KillAuraG extends PrivateCheck {
 		if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return e;
 		if (!(ConfigManager.getInstance().isKillAuraGEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() != PacketType.Client.USE_ENTITY) return e;
 			PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
@@ -58,7 +60,8 @@ public class KillAuraG extends PrivateCheck {
 		if (isSimilar(list.get(4), list.get(3)))
 			if (isSimilar(list.get(3), list.get(2)))
 				if (isSimilar(list.get(1), list.get(1)))
-					return true;
+					if (list.get(4) > 400 && list.get(3) > 400 && list.get(2) > 400 && list.get(1) > 400)
+						return true;
 		return false;
 	}
 

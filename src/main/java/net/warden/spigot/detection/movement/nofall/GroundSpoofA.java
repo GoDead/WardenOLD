@@ -6,6 +6,7 @@ import net.warden.spigot.check.api.PublicCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PublicCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
+import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -19,10 +20,11 @@ public class GroundSpoofA extends PublicCheck {
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		if (!ConfigManager.getInstance().isGroundSpoofAEnabled()) return e;
 		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
+			if (Compatibility.isInSpectator(((BukkitMoveEvent) e.getCauseEvent()).getPlayer())) return e;
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 			Player player = event.getPlayer();
-			if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR || player.isInsideVehicle() || player.isDead() || (event.getFrom().getX() == event.getTo().getX() && event.getFrom().getY() == event.getTo().getY() && event.getFrom().getZ() == event.getTo().getZ()))
+			if (player.getGameMode() == GameMode.CREATIVE || player.isInsideVehicle() || player.isDead() || (event.getFrom().getX() == event.getTo().getX() && event.getFrom().getY() == event.getTo().getY() && event.getFrom().getZ() == event.getTo().getZ()))
 				return e;
 			double deltaY = event.getTo().getY() - event.getFrom().getY();
 			double deltaYB = Math.abs(event.getFrom().getY() - event.getTo().getY());

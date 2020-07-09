@@ -8,13 +8,16 @@ import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
+import net.warden.spigot.utils.ConfigManager;
 import net.warden.spigot.utils.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.region.Region;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlightF extends PrivateCheck {
@@ -29,7 +32,9 @@ public class FlightF extends PrivateCheck {
 
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent event) {
+		if (!ConfigManager.getInstance().isFlightFEnabled()) return event;
 		if (event.getCauseEvent() instanceof PacketReceiveEvent) {
+			if (Compatibility.isInSpectator(((PacketReceiveEvent) event.getCauseEvent()).getPlayer())) return event;
 			if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) event.getCauseEvent()).getPacketId())) {
 				PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) event.getCauseEvent()).getPlayer().getUniqueId());
 				Player player = ((PacketReceiveEvent) event.getCauseEvent()).getPlayer();
@@ -40,10 +45,10 @@ public class FlightF extends PrivateCheck {
 				if (user == null) return event;
 				if (!user.getPlayer().isOnGround() && !user.getPlayer().getLocation().getBlock().isLiquid() && user.getPlayer().getLocation().getBlock().getType() != Material.LADDER && user.getPlayer().getLocation().getBlock().getType() != Material.VINE) {
 					if (isVeryNearGround(user.getPlayer().getLocation())) {
-						if (isNearGround(user.getPlayer().getLocation())) {
+						if (isNearGround(user.getPlayer().getLocation()) && !player.isInsideVehicle()) {
 							if (isRoughlyEqual(user.getPlayer().getVelocity().length(), velocityExact))
 								if (!isNearSlime(user.getPlayer().getLocation()) && !isNearWeb(user.getPlayer().getLocation()))
-									if (!isNearStairs(user.getPlayer().getLocation()) && !isNearSlab(user.getPlayer().getLocation()))
+									if (!isNearStairs(user.getPlayer().getLocation()) && !isNearSlab(user.getPlayer().getLocation()) && !isNearBoat(user.getPlayer().getLocation()))
 										flag();
 						}
 					}
@@ -60,6 +65,23 @@ public class FlightF extends PrivateCheck {
 			}
 		}
 		return event;
+	}
+
+	private boolean isNearBoat(Location location) {
+		List<Entity> ent = getEntitiesByLocation(location, 10);
+		//Common.broadcast(ent.toString());
+		if (ent.toString().contains("Boat") || ent.toString().contains("Minecart"))
+			return true;
+		return false;
+	}
+
+	private List<Entity> getEntitiesByLocation(Location loc, float r) {
+		List<Entity> ent = new ArrayList<>();
+		for (Entity e : loc.getWorld().getEntities()) {
+			if (e.getLocation().distanceSquared(loc) <= r)
+				ent.add(e);
+		}
+		return ent;
 	}
 
 	private boolean isRoughlyEqual(double d1, double d2) {

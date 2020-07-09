@@ -18,13 +18,18 @@ public class Flag {
 
 	public static void flag(PlayerData data, Check check) {
 		long time = System.currentTimeMillis() - data.getTimeSinceJoin();
-		if (time < 10000) {
+		if (time < 8000) {
 			return;
 		}
 		String name = check.getName();
 		char type = check.getCheckType();
 		int vl = data.getVLCount(check);
 		Player player = data.getPlayer();
+		if (SettingsManager.getInstance().getWorlds() != null) {
+			if (SettingsManager.getInstance().getWorlds().contains(player.getWorld().getName().toLowerCase())) {
+				return;
+			}
+		}
 		WardenFlagEvent event = new WardenFlagEvent(player, name, type, vl);
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled()) {
@@ -36,7 +41,9 @@ public class Flag {
 
 			if (!isBungee) {
 				getOnlinePlayers().stream().filter(staff -> staff.hasPermission("warden.alerts")).forEach(staff -> {
-					if (data.alerts) {
+					PlayerData user = Main.getPlayerDataManager().find(staff.getUniqueId());
+					if (user.alerts) {
+						if (data == null) return;
 						staff.sendMessage("§8[§cWarden§8] §f" + data.getPlayer().getName() + " §7is suspected of " + (false ? "§d§o(exp) " : "§e") + name + " §7(Type " + type + ") §cx" + (int) vl);
 					}
 				});
@@ -57,7 +64,7 @@ public class Flag {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		player.sendPluginMessage(Main.getInstance(), "WardenAlerts", b.toByteArray());
+		player.sendPluginMessage(Main.getInstance(), "warden:alerts", b.toByteArray());
 		return true;
 	}
 
@@ -295,6 +302,16 @@ public class Flag {
 						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraGPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
+				case 'H':
+					if (ConfigManager.getInstance().getKillAuraHMaxVL() == vl && ConfigManager.getInstance().isKillAuraHBannable()) {
+						WardenPunishEvent event = new WardenPunishEvent(user.getPlayer(), cheat, type, vl);
+						Bukkit.getPluginManager().callEvent(event);
+						if (event.isCancelled()) {
+							return;
+						}
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraHPunish().replace("%player%", user.getPlayer().getName()));
+					}
+					break;
 			}
 		} else if (cheat.contains("Criticals")) {
 			switch (type) {
@@ -339,6 +356,16 @@ public class Flag {
 							return;
 						}
 						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsBPunish().replace("%player%", user.getPlayer().getName()));
+					}
+					break;
+				case 'C':
+					if (ConfigManager.getInstance().getBadPacketsCMaxVL() == vl && ConfigManager.getInstance().isBadPacketsCBannable()) {
+						WardenPunishEvent event = new WardenPunishEvent(user.getPlayer(), cheat, type, vl);
+						Bukkit.getPluginManager().callEvent(event);
+						if (event.isCancelled()) {
+							return;
+						}
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsCPunish().replace("%player%", user.getPlayer().getName()));
 					}
 					break;
 			}

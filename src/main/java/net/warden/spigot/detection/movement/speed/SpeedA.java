@@ -11,6 +11,7 @@ import net.warden.spigot.utils.ConfigManager;
 import net.warden.spigot.utils.Distance;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class SpeedA extends PublicCheck {
@@ -22,17 +23,26 @@ public class SpeedA extends PublicCheck {
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		if (!ConfigManager.getInstance().isSpeedAEnabled()) return e;
 		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
+			if (Compatibility.isInSpectator(((BukkitMoveEvent) e.getCauseEvent()).getPlayer())) return e;
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			Distance distance = new Distance(event);
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 			Player player = user.getPlayer();
+			if (player.isFlying()) return e;
+			if (Compatibility.isLegitVersion(player)) return e;
 			long time = System.currentTimeMillis() - user.getTimeSinceDamage();
 			if (time < 2000) return e;
-			if (Compatibility.isLegitVersion(player))
-				return e;
+			long flight = System.currentTimeMillis() - user.getLastFlight();
+			if (flight < 5000) return e;
 			if (!runCheck(distance, event.getPlayer())) return e;
-			if (event.getPlayer().getActivePotionEffects() != PotionEffectType.SPEED) {
+			if (!event.getPlayer().hasPotionEffect(PotionEffectType.SPEED)) {
 				flag(user);
+			} else {
+				PotionEffect effect = event.getPlayer().getPotionEffect(PotionEffectType.SPEED);
+				if (effect.getAmplifier() < 4) {
+					if (!player.getLocation().clone().add(0, 2, 0).getBlock().getType().isSolid())
+						flag(user);
+				}
 			}
 		}
 		return e;
@@ -41,7 +51,7 @@ public class SpeedA extends PublicCheck {
 	//https://www.youtube.com/watch?v=syliroWqHcs&t
 	public boolean runCheck(Distance distance, Player player) {
 		Double xz_speed = (distance.getxDiff() > distance.getzDiff() ? distance.getxDiff() : distance.getzDiff());
-		if (xz_speed > 0.75D && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
+		if (xz_speed > 0.75D && player.getGameMode() != GameMode.CREATIVE) {
 			return true;
 		}
 		return false;

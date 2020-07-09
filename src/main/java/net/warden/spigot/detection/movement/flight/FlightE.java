@@ -20,6 +20,7 @@ public class FlightE extends PublicCheck {
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		if (!ConfigManager.getInstance().isFlightEEnabled()) return e;
 		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
+			if (Compatibility.isInSpectator(((BukkitMoveEvent) e.getCauseEvent()).getPlayer())) return e;
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			PlayerData user = Main.getPlayerDataManager().find(((BukkitMoveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			Player player = user.getPlayer();

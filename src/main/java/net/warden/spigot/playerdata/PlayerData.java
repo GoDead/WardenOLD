@@ -28,6 +28,8 @@ public final class PlayerData {
 	private long timeSinceJoin;
 	private long timeSinceDamage;
 	private long previousPreviousHit, previousHit, currentHit;
+	private long lastFlight, lastInWater;
+	private long timeSinceFlagD;
 
 	private final Map<Class<?>, Integer> violations = new HashMap<>();
 
@@ -189,6 +191,29 @@ public final class PlayerData {
 		this.currentHit = currentHit;
 	}
 
+	public long getLastFlight() {
+		return lastFlight;
+	}
+
+	public void setLastFlight(long lastFlight) {
+		this.lastFlight = lastFlight;
+	}
+
+	public long getLastInWater() {
+		return lastInWater;
+	}
+
+	public void setLastInWater(long lastInWater) {
+		this.lastInWater = lastInWater;
+	}
+
+	public long getTimeSinceFlagD() {
+		return timeSinceFlagD;
+	}
+
+	public void setTimeSinceFlagD(long timeSinceFlagD) {
+		this.timeSinceFlagD = timeSinceFlagD;
+	}
 
 	public UUID getUniqueId() {
 		return uuid;
