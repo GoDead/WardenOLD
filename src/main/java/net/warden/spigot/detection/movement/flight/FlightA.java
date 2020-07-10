@@ -43,6 +43,10 @@ public class FlightA extends PrivateCheck {
 			}
 
 			double deltaY = to.getY() - from.getY();
+			if (String.valueOf(deltaY).contains(",")) {
+				flag();
+				return event;
+			}
 			DecimalFormat df = new DecimalFormat("###.###");
 			double formatted = Double.parseDouble(df.format(deltaY));
 			if (Math.abs(previousFly) == Math.abs(formatted) && Math.abs(previousFly) != Math.abs(000.000)) {

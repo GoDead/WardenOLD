@@ -28,8 +28,9 @@ public final class PlayerData {
 	private long timeSinceJoin;
 	private long timeSinceDamage;
 	private long previousPreviousHit, previousHit, currentHit;
-	private long lastFlight, lastInWater;
+	private long lastFlight, lastInWater, lastGameModeSwitch, lastLevitation;
 	private long timeSinceFlagD;
+	private long lastToggleFlight, lastExplosionDamage, lastVehicleAction, lastNearSlime;
 
 	private final Map<Class<?>, Integer> violations = new HashMap<>();
 
@@ -213,6 +214,54 @@ public final class PlayerData {
 
 	public void setTimeSinceFlagD(long timeSinceFlagD) {
 		this.timeSinceFlagD = timeSinceFlagD;
+	}
+
+	public long getLastToggleFlight() {
+		return lastToggleFlight;
+	}
+
+	public void setLastToggleFlight(long lastToggleFlight) {
+		this.lastToggleFlight = lastToggleFlight;
+	}
+
+	public long getLastNearSlime() {
+		return lastNearSlime;
+	}
+
+	public void setLastNearSlime(long lastNearSlime) {
+		this.lastNearSlime = lastNearSlime;
+	}
+
+	public long getLastVehicleAction() {
+		return lastVehicleAction;
+	}
+
+	public void setLastVehicleAction(long lastVehicleAction) {
+		this.lastVehicleAction = lastVehicleAction;
+	}
+
+	public long getLastExplosionDamage() {
+		return lastExplosionDamage;
+	}
+
+	public void setLastExplosionDamage(long lastExplosionDamage) {
+		this.lastExplosionDamage = lastExplosionDamage;
+	}
+
+	public long getLastGameModeSwitch() {
+		return lastGameModeSwitch;
+	}
+
+	public void setLastGameModeSwitch(long lastGameModeSwitch) {
+		this.lastGameModeSwitch = lastGameModeSwitch;
+	}
+
+	public long getLastLevitation() {
+		return lastLevitation;
+	}
+
+	public void setLastLevitation(long lastLevitation) {
+		this.lastLevitation = lastLevitation;
 	}
 
 	public UUID getUniqueId() {

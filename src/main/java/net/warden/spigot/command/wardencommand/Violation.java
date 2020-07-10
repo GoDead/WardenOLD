@@ -6,6 +6,7 @@ import net.warden.spigot.detection.combat.criticals.CriticalsB;
 import net.warden.spigot.detection.combat.killaura.*;
 import net.warden.spigot.detection.movement.flight.*;
 import net.warden.spigot.detection.movement.highjump.HighJumpA;
+import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementA;
 import net.warden.spigot.detection.movement.jesus.JesusA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofB;
@@ -78,6 +79,8 @@ public class Violation extends SimpleSubCommand {
 			tell(" &f- &cTimer: &f" + getTimerVL(user));
 		if (getVelocityVL(user) != 0)
 			tell(" &f- &cVelocity: &f" + getVelocityVL(user));
+		if (getInvalidMovementVL(user) != 0)
+			tell(" &f- &cInvalidMovement: &f" + getInvalidMovementVL(user));
 	}
 
 	private int getTotalVL(PlayerData user) {
@@ -92,7 +95,8 @@ public class Violation extends SimpleSubCommand {
 				+ getBadPacketsVL(user)
 				+ getFastBowVL(user)
 				+ getTimerVL(user)
-				+ getVelocityVL(user);
+				+ getVelocityVL(user)
+				+ getInvalidMovementVL(user);
 		return VL;
 	}
 
@@ -172,6 +176,11 @@ public class Violation extends SimpleSubCommand {
 
 	private int getVelocityVL(PlayerData user) {
 		int VL = user.getViolationsMap().getOrDefault(VelocityA.class, 0);
+		return VL;
+	}
+
+	private int getInvalidMovementVL(PlayerData user) {
+		int VL = user.getViolationsMap().getOrDefault(InvalidMovementA.class, 0);
 		return VL;
 	}
 }

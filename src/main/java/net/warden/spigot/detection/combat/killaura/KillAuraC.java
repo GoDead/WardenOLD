@@ -12,6 +12,7 @@ import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
+import org.bukkit.entity.Entity;
 
 public class KillAuraC extends PrivateCheck {
 	public KillAuraC(PlayerData data) {
@@ -35,7 +36,12 @@ public class KillAuraC extends PrivateCheck {
 				}
 				long time = System.currentTimeMillis() - lastSwing;
 				if (time != 0 && time != 1) {
-					if (PacketEvents.getAPI().getPlayerUtilities().getPing(((PacketReceiveEvent) e.getCauseEvent()).getPlayer()) < 30) {
+					if (PacketEvents.getAPI().getPlayerUtilities().getPing(((PacketReceiveEvent) e.getCauseEvent()).getPlayer()) < 30
+							&& PacketEvents.getAPI().getServerUtilities().getCurrentServerTPS() > 19.5
+					) {
+						Entity entity = packetInUseEntity.getEntity();
+						if (entity.getLocation().toVector().distance(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getLocation().toVector()) < 1.2)
+							return e;
 						flag();
 					} else {
 						comply();

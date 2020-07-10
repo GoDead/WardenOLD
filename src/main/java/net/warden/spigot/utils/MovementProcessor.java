@@ -8,11 +8,21 @@ import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.entityaction.WrappedPacketInEntityAction;
 import net.warden.spigot.Main;
 import net.warden.spigot.playerdata.PlayerData;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
+import org.mineacademy.fo.region.Region;
+
+import java.util.List;
 
 public class MovementProcessor implements PacketListener, Listener {
 
@@ -26,6 +36,11 @@ public class MovementProcessor implements PacketListener, Listener {
 
 			data.setLastLocation(data.getLocation() != null ? data.getLocation() : event.getPlayer().getLocation());
 			data.setLocation(event.getPlayer().getLocation());
+
+			if (isNearSlime(data.getLocation())) {
+				data.setLastNearSlime(System.currentTimeMillis());
+			}
+
 
 			if (PacketType.Client.Util.isInstanceOfFlying((event.getPacketId()))) {
 				data.setDeltaXZ(data.getLocation().toVector().setY(0).distance(data.getLastLocation().toVector().setY(0)));
@@ -52,9 +67,28 @@ public class MovementProcessor implements PacketListener, Listener {
 		}
 	}
 
+	private static boolean isNearSlime(Location location) {
+		Region region = new Region(location.clone().add(1, -0.5, 1), location.clone().add(-1, -0.5, -1));
+		List<Block> blocks = region.getBlocks();
+		Material slime = Material.SLIME_BLOCK;
+		if (blocks.size() != 9) return false;
+		return (blocks.get(0).getType() == slime ||
+				blocks.get(1).getType() == slime ||
+				blocks.get(2).getType() == slime ||
+				blocks.get(3).getType() == slime ||
+				blocks.get(4).getType() == slime ||
+				blocks.get(5).getType() == slime ||
+				blocks.get(6).getType() == slime ||
+				blocks.get(7).getType() == slime ||
+				blocks.get(8).getType() == slime
+		);
+	}
+
+
 	@EventHandler
 	public void moveEvent(PlayerMoveEvent event) {
 		PlayerData data = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
+		if (data == null) return;
 		data.setTo(event.getTo());
 		data.setFrom(event.getFrom());
 		if (event.getFrom().getBlock().isLiquid() || event.getTo().getBlock().isLiquid()) {
@@ -63,11 +97,52 @@ public class MovementProcessor implements PacketListener, Listener {
 	}
 
 	@EventHandler
+	public void toggleFlight(PlayerToggleFlightEvent event) {
+		PlayerData data = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
+		if (data == null) return;
+		if (!event.isFlying()) {
+			data.setLastFlight(System.currentTimeMillis());
+		}
+	}
+
+
+	@EventHandler
 	public void playerDamage(EntityDamageEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player player = (Player) event.getEntity();
 			PlayerData data = Main.getPlayerDataManager().find(player.getUniqueId());
+			if (data == null) return;
 			data.setTimeSinceDamage(System.currentTimeMillis());
+
+			if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
+				data.setLastExplosionDamage(System.currentTimeMillis());
+			}
 		}
+	}
+
+	@EventHandler
+	public void exit(VehicleEnterEvent event) {
+		if (event.getEntered() instanceof Player) {
+			Player player = (Player) event.getEntered();
+			PlayerData data = Main.getPlayerDataManager().find(player.getUniqueId());
+			if (data == null) return;
+			data.setLastVehicleAction(System.currentTimeMillis());
+		}
+	}
+
+	@EventHandler
+	public void bed(PlayerBedEnterEvent event) {
+		Player player = event.getPlayer();
+		PlayerData data = Main.getPlayerDataManager().find(player.getUniqueId());
+		if (data == null) return;
+		data.setLastVehicleAction(System.currentTimeMillis());
+	}
+
+	@EventHandler
+	public void bedExit(PlayerBedLeaveEvent event) {
+		Player player = event.getPlayer();
+		PlayerData data = Main.getPlayerDataManager().find(player.getUniqueId());
+		if (data == null) return;
+		data.setLastVehicleAction(System.currentTimeMillis());
 	}
 }

@@ -28,6 +28,14 @@ public class HighJumpA extends PublicCheck {
 			if (event.getPlayer().hasPotionEffect(PotionEffectType.JUMP)) return e;
 			final double deltaY = event.getTo().getY() - event.getFrom().getY();
 			if (event.getPlayer().isOnGround()) return e;
+			if (event.getPlayer().getAllowFlight()) return e;
+			assert user != null;
+			long explosion = System.currentTimeMillis() - user.getLastExplosionDamage();
+			if (explosion < 5000) return e;
+			long slime = System.currentTimeMillis() - user.getLastNearSlime();
+			if (slime < 8000) return e;
+			long levitation = System.currentTimeMillis() - user.getLastLevitation();
+			if (levitation < 5000) return e;
 			if (deltaY > 0.55) {
 				if (!Compatibility.isLegitVersion(event.getPlayer()))
 					flag(user);

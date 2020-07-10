@@ -25,11 +25,24 @@ public class Compatibility {
 			}
 			return player.isGliding();
 		}
+
+		public static boolean isNearShulkerBox(Location location) {
+			if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return false;
+			if (!XMaterial.SHULKER_BOX.isSupported()) return false;
+			Region region = new Region(location.clone().add(1, -1, 1), location.clone().add(-1, 1, -1));
+			List<Block> blocks = region.getBlocks();
+			blocks.removeIf(block -> block.getType() != XMaterial.SHULKER_BOX.parseMaterial());
+			return !blocks.isEmpty();
+		}
 	}
 
 	public static class V_1_13 {
 		public static boolean hasLevitation(Player player) {
 			if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_13)) return false;
+			if (player.hasPotionEffect(PotionEffectType.LEVITATION)) {
+				PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
+				user.setLastLevitation(System.currentTimeMillis());
+			}
 			return player.hasPotionEffect(PotionEffectType.LEVITATION);
 		}
 
@@ -73,6 +86,7 @@ public class Compatibility {
 	public static boolean isLegitVersion(Player player) {
 		List<Boolean> list = new ArrayList<>();
 		list.add(V_1_9.isGliding(player));
+		list.add(V_1_9.isNearShulkerBox(player.getLocation()));
 		list.add(V_1_13.hasLevitation(player));
 		list.add(V_1_13.isRiptiding(player));
 		list.add(V_1_14.isNearBerryBush(player.getLocation()));

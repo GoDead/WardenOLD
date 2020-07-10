@@ -17,6 +17,7 @@ public class AlertCommand extends SimpleCommand {
 		checkConsole();
 		Player player = (Player) sender;
 		PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
+		if (user == null) return;
 		user.alerts = !user.alerts;
 		player.sendMessage(Common.colorize("§8[§cWarden§8] &7Your alerts are now &r" + (user.alerts ? "&aon" : "&coff")));
 	}

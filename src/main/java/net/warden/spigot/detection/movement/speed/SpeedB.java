@@ -9,7 +9,6 @@ import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.GameMode;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -27,6 +26,11 @@ public class SpeedB extends PublicCheck {
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 			if (event.getPlayer().hasPotionEffect(PotionEffectType.SPEED)) return e;
 			if (event.getPlayer().getGameMode() == GameMode.CREATIVE) return e;
+			assert user != null;
+			long slime = System.currentTimeMillis() - user.getLastNearSlime();
+			if (slime < 4000) return e;
+			long vehicle = System.currentTimeMillis() - user.getLastVehicleAction();
+			if (vehicle < 2000) return e;
 			long time = System.currentTimeMillis() - user.getTimeSinceDamage();
 			if (time < 2000) return e;
 			long flight = System.currentTimeMillis() - user.getLastFlight();
@@ -39,6 +43,7 @@ public class SpeedB extends PublicCheck {
 				event.getPlayer().sendMessage(Math.abs(event.getPlayer().getWalkSpeed()) + " " + Math.abs(0.3));
 				return e;
 			}
+			if (event.getPlayer().isInsideVehicle()) return e;
 			Vector from = event.getFrom().toVector().clone().setY(0);
 			Vector to = event.getTo().toVector().clone().setY(0);
 			double speedSquared = to.distanceSquared(from);
@@ -46,11 +51,14 @@ public class SpeedB extends PublicCheck {
 				if (!event.getPlayer().hasPotionEffect(PotionEffectType.SPEED)) {
 					flag(user);
 				} else {
-					PotionEffect effect = event.getPlayer().getPotionEffect(PotionEffectType.SPEED);
-					if (effect.getAmplifier() < 4) {
-						if (!event.getPlayer().getLocation().clone().add(0, 2, 0).getBlock().getType().isSolid())
-							flag(user);
-					}
+					event.getPlayer().getActivePotionEffects().forEach(potion -> {
+						if (potion.getType() == PotionEffectType.SPEED) {
+							if (potion.getAmplifier() < 4) {
+								if (!event.getPlayer().getLocation().clone().add(0, 2, 0).getBlock().getType().isSolid())
+									flag(user);
+							}
+						}
+					});
 				}
 			}
 		}

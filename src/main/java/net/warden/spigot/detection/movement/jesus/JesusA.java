@@ -76,7 +76,16 @@ public class JesusA extends PrivateCheck {
 	private boolean isNearWater(Location location) {
 		Region region = new Region(location.clone().add(1, -0.5, 1), location.clone().add(-1, -0.5, -1));
 		List<Block> blocks = region.getBlocks();
-		blocks.removeIf(block -> !block.isLiquid());
-		return blocks.size() == 9;
+		if (blocks.size() != 9) return false;
+		return (blocks.get(0).isLiquid() &&
+				blocks.get(1).isLiquid() &&
+				blocks.get(2).isLiquid() &&
+				blocks.get(3).isLiquid() &&
+				blocks.get(4).isLiquid() &&
+				blocks.get(5).isLiquid() &&
+				blocks.get(6).isLiquid() &&
+				blocks.get(7).isLiquid() &&
+				blocks.get(8).isLiquid()
+		);
 	}
 }

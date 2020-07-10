@@ -11,7 +11,6 @@ import net.warden.spigot.utils.ConfigManager;
 import net.warden.spigot.utils.Distance;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class SpeedA extends PublicCheck {
@@ -27,22 +26,31 @@ public class SpeedA extends PublicCheck {
 			BukkitMoveEvent event = (BukkitMoveEvent) e.getCauseEvent();
 			Distance distance = new Distance(event);
 			PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
-			Player player = user.getPlayer();
-			if (player.isFlying()) return e;
+			Player player = ((BukkitMoveEvent) e.getCauseEvent()).getPlayer();
 			if (Compatibility.isLegitVersion(player)) return e;
+			assert user != null;
+			long slime = System.currentTimeMillis() - user.getLastNearSlime();
+			if (slime < 4000) return e;
+			long vehicle = System.currentTimeMillis() - user.getLastVehicleAction();
+			if (vehicle < 2000) return e;
 			long time = System.currentTimeMillis() - user.getTimeSinceDamage();
 			if (time < 2000) return e;
 			long flight = System.currentTimeMillis() - user.getLastFlight();
 			if (flight < 5000) return e;
 			if (!runCheck(distance, event.getPlayer())) return e;
+			if (player.isInsideVehicle()) return e;
 			if (!event.getPlayer().hasPotionEffect(PotionEffectType.SPEED)) {
 				flag(user);
 			} else {
-				PotionEffect effect = event.getPlayer().getPotionEffect(PotionEffectType.SPEED);
-				if (effect.getAmplifier() < 4) {
-					if (!player.getLocation().clone().add(0, 2, 0).getBlock().getType().isSolid())
-						flag(user);
-				}
+				player.getActivePotionEffects().forEach(potion -> {
+					if (potion.getType() == PotionEffectType.SPEED) {
+						if (potion.getAmplifier() < 4) {
+							if (!player.getLocation().clone().add(0, 2, 0).getBlock().getType().isSolid())
+								flag(user);
+						}
+					}
+				});
+
 			}
 		}
 		return e;

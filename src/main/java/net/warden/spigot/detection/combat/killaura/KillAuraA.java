@@ -37,7 +37,7 @@ public class KillAuraA extends PrivateCheck {
 					return e;
 				}
 				if (difference <= 49 && previousDifference <= 49) {
-					flag();
+					//flag();
 				}
 				previousTimeStamp = e.getTimestamp();
 			}

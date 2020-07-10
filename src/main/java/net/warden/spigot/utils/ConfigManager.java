@@ -209,6 +209,17 @@ public class ConfigManager extends YamlConfig {
 	private boolean velocityBBannable;
 	private String velocityBPunish;
 
+	//INVALIDMOVEMENT
+	private boolean invalidMovementAEnabled;
+	private int invalidMovementAMaxVL;
+	private boolean invalidMovementABannable;
+	private String invalidMovementAPunish;
+
+	private boolean invalidMovementBEnabled;
+	private int invalidMovementBMaxVL;
+	private boolean invalidMovementBBannable;
+	private String invalidMovementBPunish;
+
 
 	public ConfigManager() {
 		setHeader("Warden Checks Configuration");
@@ -420,6 +431,16 @@ public class ConfigManager extends YamlConfig {
 		velocityBMaxVL = getOrSetDefault("VelocityB.maxVl", 15);
 		velocityBBannable = getOrSetDefault("VelocityB.bannable", true);
 		velocityBPunish = getOrSetDefault("VelocityB.punish", "ban %player%");
+
+		//VELOCITY
+		invalidMovementAEnabled = getOrSetDefault("InvalidMovementA.enabled", true);
+		invalidMovementAMaxVL = getOrSetDefault("InvalidMovementA.maxVl", 15);
+		invalidMovementABannable = getOrSetDefault("InvalidMovementA.bannable", true);
+		invalidMovementAPunish = getOrSetDefault("InvalidMovementA.punish", "ban %player%");
+		invalidMovementBEnabled = getOrSetDefault("InvalidMovementB.enabled", true);
+		invalidMovementBMaxVL = getOrSetDefault("InvalidMovementB.maxVl", 15);
+		invalidMovementBBannable = getOrSetDefault("InvalidMovementB.bannable", true);
+		invalidMovementBPunish = getOrSetDefault("InvalidMovementB.punish", "ban %player%");
 	}
 
 	@Override
@@ -622,7 +643,18 @@ public class ConfigManager extends YamlConfig {
 				"VelocityB.enabled", velocityBEnabled,
 				"VelocityB.maxVl", velocityBMaxVL,
 				"VelocityB.bannable", velocityBBannable,
-				"VelocityB.punish", velocityBPunish
+				"VelocityB.punish", velocityBPunish,
+
+				//VELOCITY
+				"InvalidMovementA.enabled", invalidMovementAEnabled,
+				"InvalidMovementA.maxVl", invalidMovementAMaxVL,
+				"InvalidMovementA.bannable", invalidMovementABannable,
+				"InvalidMovementA.punish", invalidMovementAPunish,
+
+				"InvalidMovementB.enabled", invalidMovementBEnabled,
+				"InvalidMovementB.maxVl", invalidMovementBMaxVL,
+				"InvalidMovementB.bannable", invalidMovementBBannable,
+				"InvalidMovementB.punish", invalidMovementBPunish
 
 		);
 	}

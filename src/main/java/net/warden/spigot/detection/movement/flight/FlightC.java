@@ -54,7 +54,7 @@ public class FlightC extends PrivateCheck {
 				return e;
 			if (!onGround && !lastOnGround && !lastLastOnGround && Math.abs(predictedDist) >= 0.005D && ((BukkitMoveEvent) e.getCauseEvent()).getPlayer().getVelocity().length() > 0.3D) {
 				if (!isRoughlyEqual(distY, predictedDist)) {
-					flag();
+					//flag();
 				}
 			} else {
 				every++;
