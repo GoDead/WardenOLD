@@ -474,6 +474,29 @@ public class Flag {
 					}
 					break;
 			}
+		} else if (cheat.contains("InvalidMovement")) {
+			switch (type) {
+				case 'A':
+					if (ConfigManager.getInstance().getInvalidMovementAMaxVL() == vl && ConfigManager.getInstance().isInvalidMovementABannable()) {
+						WardenPunishEvent event = new WardenPunishEvent(user.getPlayer(), cheat, type, vl);
+						Bukkit.getPluginManager().callEvent(event);
+						if (event.isCancelled()) {
+							return;
+						}
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getInvalidMovementAPunish().replace("%player%", user.getPlayer().getName()));
+					}
+					break;
+				case 'B':
+					if (ConfigManager.getInstance().getInvalidMovementBMaxVL() == vl && ConfigManager.getInstance().isInvalidMovementBBannable()) {
+						WardenPunishEvent event = new WardenPunishEvent(user.getPlayer(), cheat, type, vl);
+						Bukkit.getPluginManager().callEvent(event);
+						if (event.isCancelled()) {
+							return;
+						}
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getInvalidMovementBPunish().replace("%player%", user.getPlayer().getName()));
+					}
+					break;
+			}
 		}
 	}
 }

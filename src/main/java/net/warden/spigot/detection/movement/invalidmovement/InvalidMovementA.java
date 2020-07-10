@@ -8,6 +8,7 @@ import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
+import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -18,6 +19,7 @@ public class InvalidMovementA extends PrivateCheck {
 
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
+		if (!ConfigManager.getInstance().isInvalidMovementAEnabled()) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
 			if (PacketType.Client.Util.isInstanceOfFlying((((PacketReceiveEvent) e.getCauseEvent()).getPacketId()))) {
 				if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;

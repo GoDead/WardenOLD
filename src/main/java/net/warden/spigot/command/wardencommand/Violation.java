@@ -7,6 +7,7 @@ import net.warden.spigot.detection.combat.killaura.*;
 import net.warden.spigot.detection.movement.flight.*;
 import net.warden.spigot.detection.movement.highjump.HighJumpA;
 import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementA;
+import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementB;
 import net.warden.spigot.detection.movement.jesus.JesusA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofB;
@@ -180,7 +181,8 @@ public class Violation extends SimpleSubCommand {
 	}
 
 	private int getInvalidMovementVL(PlayerData user) {
-		int VL = user.getViolationsMap().getOrDefault(InvalidMovementA.class, 0);
+		int VL = user.getViolationsMap().getOrDefault(InvalidMovementA.class, 0)
+				+ user.getViolationsMap().getOrDefault(InvalidMovementB.class, 0);
 		return VL;
 	}
 }

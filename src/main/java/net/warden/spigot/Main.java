@@ -19,6 +19,7 @@ import net.warden.spigot.detection.combat.reach.ReachA;
 import net.warden.spigot.detection.movement.flight.*;
 import net.warden.spigot.detection.movement.highjump.HighJumpA;
 import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementA;
+import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementB;
 import net.warden.spigot.detection.movement.jesus.JesusA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofB;
@@ -141,6 +142,7 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new SpeedA());
 		getCheckManager().addCheck(new SpeedB());
 		getCheckManager().addCheck(new HighJumpA());
+		getCheckManager().addCheck(new InvalidMovementB());
 		getCheckManager().addCheck(new ScaffoldA());
 		getCheckManager().addCheck(new CriticalsA());
 		getCheckManager().addCheck(new CriticalsB());
