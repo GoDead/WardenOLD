@@ -8,6 +8,7 @@ import net.warden.spigot.events.PublicCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -18,6 +19,7 @@ public class GroundSpoofA extends PublicCheck {
 
 	@Override
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
+		//if (!ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return e;
 		if (!ConfigManager.getInstance().isGroundSpoofAEnabled()) return e;
 		if (e.getCauseEvent() instanceof BukkitMoveEvent) {
 			if (Compatibility.isInSpectator(((BukkitMoveEvent) e.getCauseEvent()).getPlayer())) return e;
@@ -31,7 +33,10 @@ public class GroundSpoofA extends PublicCheck {
 			boolean up = (deltaY > 0.0D);
 			if (!player.isFlying()) {
 				if (!up && deltaYB > 0.4D && player.isOnGround()) {
-					flag(user);
+					Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+						if ((System.currentTimeMillis() - user.getTimeSinceDamage()) > 300)
+							flag(user);
+					}, 5);
 				}
 			}
 		}

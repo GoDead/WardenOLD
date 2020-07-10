@@ -11,7 +11,6 @@ import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.mineacademy.fo.Common;
 
 public class ScaffoldA extends PublicCheck {
 	public ScaffoldA() {
@@ -30,8 +29,7 @@ public class ScaffoldA extends PublicCheck {
 			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 				float pitchNow = player.getLocation().getPitch();
 				float diff = Math.abs(now - pitchNow);
-				Common.broadcast(diff + "");
-				if (diff > 20F) {
+				if (diff > 20F && user.getDeltaXZ() > 0.5) {
 					flag(user);
 				}
 			}, 1L);

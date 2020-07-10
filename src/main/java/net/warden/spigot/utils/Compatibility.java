@@ -50,6 +50,11 @@ public class Compatibility {
 			if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_13)) return false;
 			return player.isRiptiding();
 		}
+
+		public static boolean isSwimming(Player player) {
+			if (ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_13)) return false;
+			return player.isSwimming();
+		}
 	}
 
 	public static class V_1_14 {

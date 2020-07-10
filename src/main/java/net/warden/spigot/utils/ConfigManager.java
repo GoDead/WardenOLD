@@ -5,6 +5,8 @@ import lombok.Getter;
 import org.mineacademy.fo.collection.SerializedMap;
 import org.mineacademy.fo.settings.YamlConfig;
 
+import java.util.List;
+
 
 @Getter(AccessLevel.PUBLIC)
 public class ConfigManager extends YamlConfig {
@@ -14,211 +16,216 @@ public class ConfigManager extends YamlConfig {
 	private boolean flightAEnabled;
 	private int flightAMaxVL;
 	private boolean flightABannable;
-	private String flightAPunish;
+	private List<String> flightAPunish;
 
 	private boolean flightBEnabled;
 	private int flightBMaxVL;
 	private boolean flightBBannable;
-	private String flightBPunish;
+	private List<String> flightBPunish;
 
 	private boolean flightCEnabled;
 	private int flightCMaxVL;
 	private boolean flightCBannable;
-	private String flightCPunish;
+	private List<String> flightCPunish;
 
 	private boolean flightDEnabled;
 	private int flightDMaxVL;
 	private boolean flightDBannable;
-	private String flightDPunish;
+	private List<String> flightDPunish;
 
 	private boolean flightEEnabled;
 	private int flightEMaxVL;
 	private boolean flightEBannable;
-	private String flightEPunish;
+	private List<String> flightEPunish;
 
 	private boolean flightFEnabled;
 	private int flightFMaxVL;
 	private boolean flightFBannable;
-	private String flightFPunish;
+	private List<String> flightFPunish;
 
 	//SPEED
 	private boolean speedAEnabled;
 	private int speedAMaxVL;
 	private boolean speedABannable;
-	private String speedAPunish;
+	private List<String> speedAPunish;
 
 	private boolean speedBEnabled;
 	private int speedBMaxVL;
 	private boolean speedBBannable;
-	private String speedBPunish;
+	private List<String> speedBPunish;
 
 	//SCAFFOLD
 	private boolean scaffoldAEnabled;
 	private int scaffoldAMaxVL;
 	private boolean scaffoldABannable;
-	private String scaffoldAPunish;
+	private List<String> scaffoldAPunish;
 
 	private boolean scaffoldBEnabled;
 	private int scaffoldBMaxVL;
 	private boolean scaffoldBBannable;
-	private String scaffoldBPunish;
+	private List<String> scaffoldBPunish;
 
 	//JESUS
 	private boolean jesusAEnabled;
 	private int jesusAMaxVL;
 	private boolean jesusABannable;
-	private String jesusAPunish;
+	private List<String> jesusAPunish;
 
 	private boolean jesusBEnabled;
 	private int jesusBMaxVL;
 	private boolean jesusBBannable;
-	private String jesusBPunish;
+	private List<String> jesusBPunish;
 
 	//HIGHJUMP
 	private boolean highJumpAEnabled;
 	private int highJumpAMaxVL;
 	private boolean highJumpABannable;
-	private String highJumpAPunish;
+	private List<String> highJumpAPunish;
 
 	//KILLAURA
 	private boolean killAuraAEnabled;
 	private int killAuraAMaxVL;
 	private boolean killAuraABannable;
-	private String killAuraAPunish;
+	private List<String> killAuraAPunish;
 
 	private boolean killAuraBEnabled;
 	private int killAuraBMaxVL;
 	private boolean killAuraBBannable;
-	private String killAuraBPunish;
+	private List<String> killAuraBPunish;
 
 	private boolean killAuraCEnabled;
 	private int killAuraCMaxVL;
 	private boolean killAuraCBannable;
-	private String killAuraCPunish;
+	private List<String> killAuraCPunish;
 
 	private boolean killAuraDEnabled;
 	private int killAuraDMaxVL;
 	private boolean killAuraDBannable;
-	private String killAuraDPunish;
+	private List<String> killAuraDPunish;
 
 	private boolean killAuraEEnabled;
 	private int killAuraEMaxVL;
 	private boolean killAuraEBannable;
-	private String killAuraEPunish;
+	private List<String> killAuraEPunish;
 
 	private boolean killAuraFEnabled;
 	private int killAuraFMaxVL;
 	private boolean killAuraFBannable;
-	private String killAuraFPunish;
+	private List<String> killAuraFPunish;
 
 	private boolean killAuraGEnabled;
 	private int killAuraGMaxVL;
 	private boolean killAuraGBannable;
-	private String killAuraGPunish;
+	private List<String> killAuraGPunish;
 
 	private boolean killAuraHEnabled;
 	private int killAuraHMaxVL;
 	private boolean killAuraHBannable;
-	private String killAuraHPunish;
+	private List<String> killAuraHPunish;
 
 	//CRITICALS
 	private boolean criticalsAEnabled;
 	private int criticalsAMaxVL;
 	private boolean criticalsABannable;
-	private String criticalsAPunish;
+	private List<String> criticalsAPunish;
 
 	private boolean criticalsBEnabled;
 	private int criticalsBMaxVL;
 	private boolean criticalsBBannable;
-	private String criticalsBPunish;
+	private List<String> criticalsBPunish;
 
 	//REACH
 	private boolean reachAEnabled;
 	private int reachAMaxVL;
 	private boolean reachABannable;
-	private String reachAPunish;
+	private List<String> reachAPunish;
 
 	//FASTBOW
 	private boolean fastBowAEnabled;
 	private int fastBowAMaxVL;
 	private boolean fastBowABannable;
-	private String fastBowAPunish;
+	private List<String> fastBowAPunish;
 
 	private boolean fastBowBEnabled;
 	private int fastBowBMaxVL;
 	private boolean fastBowBBannable;
-	private String fastBowBPunish;
+	private List<String> fastBowBPunish;
 
 	//BLINK
 	private boolean blinkAEnabled;
 	private int blinkAMaxVL;
 	private boolean blinkABannable;
-	private String blinkAPunish;
+	private List<String> blinkAPunish;
 
 	//BADPACKETS
 	private boolean badPacketsAEnabled;
 	private int badPacketsAMaxVL;
 	private boolean badPacketsABannable;
-	private String badPacketsAPunish;
+	private List<String> badPacketsAPunish;
 
 	private boolean badPacketsBEnabled;
 	private int badPacketsBMaxVL;
 	private boolean badPacketsBBannable;
-	private String badPacketsBPunish;
+	private List<String> badPacketsBPunish;
 
 	private boolean badPacketsCEnabled;
 	private int badPacketsCMaxVL;
 	private boolean badPacketsCBannable;
-	private String badPacketsCPunish;
+	private List<String> badPacketsCPunish;
 
 	private boolean badPacketsDEnabled;
 	private int badPacketsDMaxVL;
 	private boolean badPacketsDBannable;
-	private String badPacketsDPunish;
+	private List<String> badPacketsDPunish;
 
 	//GROUNDSPOOF
 	private boolean groundSpoofAEnabled;
 	private int groundSpoofAMaxVL;
 	private boolean groundSpoofABannable;
-	private String groundSpoofAPunish;
+	private List<String> groundSpoofAPunish;
 
 	private boolean groundSpoofBEnabled;
 	private int groundSpoofBMaxVL;
 	private boolean groundSpoofBBannable;
-	private String groundSpoofBPunish;
+	private List<String> groundSpoofBPunish;
 
 	//TIMER
 	private boolean timerAEnabled;
 	private int timerAMaxVL;
 	private boolean timerABannable;
-	private String timerAPunish;
+	private List<String> timerAPunish;
 
 	private boolean timerBEnabled;
 	private int timerBMaxVL;
 	private boolean timerBBannable;
-	private String timerBPunish;
+	private List<String> timerBPunish;
 
 	//VELOCITY
 	private boolean velocityAEnabled;
 	private int velocityAMaxVL;
 	private boolean velocityABannable;
-	private String velocityAPunish;
+	private List<String> velocityAPunish;
 
 	private boolean velocityBEnabled;
 	private int velocityBMaxVL;
 	private boolean velocityBBannable;
-	private String velocityBPunish;
+	private List<String> velocityBPunish;
 
 	//INVALIDMOVEMENT
 	private boolean invalidMovementAEnabled;
 	private int invalidMovementAMaxVL;
 	private boolean invalidMovementABannable;
-	private String invalidMovementAPunish;
+	private List<String> invalidMovementAPunish;
 
 	private boolean invalidMovementBEnabled;
 	private int invalidMovementBMaxVL;
 	private boolean invalidMovementBBannable;
-	private String invalidMovementBPunish;
+	private List<String> invalidMovementBPunish;
+
+	private boolean invalidMovementCEnabled;
+	private int invalidMovementCMaxVL;
+	private boolean invalidMovementCBannable;
+	private List<String> invalidMovementCPunish;
 
 
 	public ConfigManager() {
@@ -237,210 +244,216 @@ public class ConfigManager extends YamlConfig {
 		flightAEnabled = getOrSetDefault("FlightA.enabled", true);
 		flightAMaxVL = getOrSetDefault("FlightA.maxVl", 15);
 		flightABannable = getOrSetDefault("FlightA.bannable", true);
-		flightAPunish = getOrSetDefault("FlightA.punish", "ban %player%");
+		flightAPunish = getStringList("FlightA.punish");
 
 		flightBEnabled = getOrSetDefault("FlightB.enabled", true);
 		flightBMaxVL = getOrSetDefault("FlightB.maxVl", 15);
 		flightBBannable = getOrSetDefault("FlightB.bannable", true);
-		flightBPunish = getOrSetDefault("FlightB.punish", "ban %player%");
+		flightBPunish = getStringList("FlightB.punish");
 
 		flightCEnabled = getOrSetDefault("FlightC.enabled", true);
 		flightCMaxVL = getOrSetDefault("FlightC.maxVl", 15);
 		flightCBannable = getOrSetDefault("FlightC.bannable", true);
-		flightCPunish = getOrSetDefault("FlightC.punish", "ban %player%");
+		flightCPunish = getStringList("FlightC.punish");
 
 		flightDEnabled = getOrSetDefault("FlightD.enabled", true);
 		flightDMaxVL = getOrSetDefault("FlightD.maxVl", 15);
 		flightDBannable = getOrSetDefault("FlightD.bannable", true);
-		flightDPunish = getOrSetDefault("FlightD.punish", "ban %player%");
+		flightDPunish = getStringList("FlightD.punish");
 
 		flightEEnabled = getOrSetDefault("FlightE.enabled", true);
 		flightEMaxVL = getOrSetDefault("FlightE.maxVl", 15);
 		flightEBannable = getOrSetDefault("FlightE.bannable", true);
-		flightEPunish = getOrSetDefault("FlightE.punish", "ban %player%");
+		flightEPunish = getStringList("FlightE.punish");
 
 		flightFEnabled = getOrSetDefault("FlightF.enabled", true);
 		flightFMaxVL = getOrSetDefault("FlightF.maxVl", 15);
 		flightFBannable = getOrSetDefault("FlightF.bannable", true);
-		flightFPunish = getOrSetDefault("FlightF.punish", "ban %player%");
+		flightFPunish = getStringList("FlightF.punish");
 
 		//SPEED
 		speedAEnabled = getOrSetDefault("SpeedA.enabled", true);
 		speedAMaxVL = getOrSetDefault("SpeedA.maxVl", 15);
 		speedABannable = getOrSetDefault("SpeedA.bannable", true);
-		speedAPunish = getOrSetDefault("SpeedA.punish", "ban %player%");
+		speedAPunish = getStringList("SpeedA.punish");
 
 		speedBEnabled = getOrSetDefault("SpeedB.enabled", true);
 		speedBMaxVL = getOrSetDefault("SpeedB.maxVl", 15);
 		speedBBannable = getOrSetDefault("SpeedB.bannable", true);
-		speedBPunish = getOrSetDefault("SpeedB.punish", "ban %player%");
+		speedBPunish = getStringList("SpeedB.punish");
 
 		//SCAFFOLD
 		scaffoldAEnabled = getOrSetDefault("ScaffoldA.enabled", true);
 		scaffoldAMaxVL = getOrSetDefault("ScaffoldA.maxVl", 15);
 		scaffoldABannable = getOrSetDefault("ScaffoldA.bannable", true);
-		scaffoldAPunish = getOrSetDefault("ScaffoldA.punish", "ban %player%");
+		scaffoldAPunish = getStringList("ScaffoldA.punish");
 
 		scaffoldBEnabled = getOrSetDefault("ScaffoldB.enabled", true);
 		scaffoldBMaxVL = getOrSetDefault("ScaffoldB.maxVl", 15);
 		scaffoldBBannable = getOrSetDefault("ScaffoldB.bannable", true);
-		scaffoldBPunish = getOrSetDefault("ScaffoldB.punish", "ban %player%");
+		scaffoldBPunish = getStringList("ScaffoldB.punish");
 
 		//JESUS
 		jesusAEnabled = getOrSetDefault("JesusA.enabled", true);
 		jesusAMaxVL = getOrSetDefault("JesusA.maxVl", 15);
 		jesusABannable = getOrSetDefault("JesusA.bannable", true);
-		jesusAPunish = getOrSetDefault("JesusA.punish", "ban %player%");
+		jesusAPunish = getStringList("JesusA.punish");
 
 		jesusBEnabled = getOrSetDefault("JesusB.enabled", true);
 		jesusBMaxVL = getOrSetDefault("JesusB.maxVl", 15);
 		jesusBBannable = getOrSetDefault("JesusB.bannable", true);
-		jesusBPunish = getOrSetDefault("JesusB.punish", "ban %player%");
+		jesusBPunish = getStringList("JesusB.punish");
 
 		//HIGHJUMP
 		highJumpAEnabled = getOrSetDefault("ScaffoldA.enabled", true);
 		highJumpAMaxVL = getOrSetDefault("ScaffoldA.maxVl", 15);
 		highJumpABannable = getOrSetDefault("ScaffoldA.bannable", true);
-		highJumpAPunish = getOrSetDefault("ScaffoldA.punish", "ban %player%");
+		highJumpAPunish = getStringList("ScaffoldA.punish");
 
 		//KILLAURA
 		killAuraAEnabled = getOrSetDefault("KillAuraA.enabled", true);
 		killAuraAMaxVL = getOrSetDefault("KillAuraA.maxVl", 15);
 		killAuraABannable = getOrSetDefault("KillAuraA.bannable", true);
-		killAuraAPunish = getOrSetDefault("KillAuraA.punish", "ban %player%");
+		killAuraAPunish = getStringList("KillAuraA.punish");
 
 		killAuraBEnabled = getOrSetDefault("KillAuraB.enabled", true);
 		killAuraBMaxVL = getOrSetDefault("KillAuraB.maxVl", 15);
 		killAuraBBannable = getOrSetDefault("KillAuraB.bannable", true);
-		killAuraBPunish = getOrSetDefault("KillAuraB.punish", "ban %player%");
+		killAuraBPunish = getStringList("KillAuraB.punish");
 
 		killAuraCEnabled = getOrSetDefault("KillAuraC.enabled", true);
 		killAuraCMaxVL = getOrSetDefault("KillAuraC.maxVl", 15);
 		killAuraCBannable = getOrSetDefault("KillAuraC.bannable", true);
-		killAuraCPunish = getOrSetDefault("KillAuraC.punish", "ban %player%");
+		killAuraCPunish = getStringList("KillAuraC.punish");
 
 		killAuraDEnabled = getOrSetDefault("KillAuraD.enabled", true);
 		killAuraDMaxVL = getOrSetDefault("KillAuraD.maxVl", 15);
 		killAuraDBannable = getOrSetDefault("KillAuraD.bannable", true);
-		killAuraDPunish = getOrSetDefault("KillAuraD.punish", "ban %player%");
+		killAuraDPunish = getStringList("KillAuraD.punish");
 
 		killAuraEEnabled = getOrSetDefault("KillAuraE.enabled", true);
 		killAuraEMaxVL = getOrSetDefault("KillAuraE.maxVl", 15);
 		killAuraEBannable = getOrSetDefault("KillAuraE.bannable", true);
-		killAuraEPunish = getOrSetDefault("KillAuraE.punish", "ban %player%");
+		killAuraEPunish = getStringList("KillAuraE.punish");
 
 		killAuraFEnabled = getOrSetDefault("KillAuraF.enabled", true);
 		killAuraFMaxVL = getOrSetDefault("KillAuraF.maxVl", 15);
 		killAuraFBannable = getOrSetDefault("KillAuraF.bannable", true);
-		killAuraFPunish = getOrSetDefault("KillAuraF.punish", "ban %player%");
+		killAuraFPunish = getStringList("KillAuraF.punish");
 
 		killAuraGEnabled = getOrSetDefault("KillAuraG.enabled", true);
 		killAuraGMaxVL = getOrSetDefault("KillAuraG.maxVl", 15);
 		killAuraGBannable = getOrSetDefault("KillAuraG.bannable", true);
-		killAuraGPunish = getOrSetDefault("KillAuraG.punish", "ban %player%");
+		killAuraGPunish = getStringList("KillAuraG.punish");
 
 		killAuraHEnabled = getOrSetDefault("KillAuraH.enabled", true);
 		killAuraHMaxVL = getOrSetDefault("KillAuraH.maxVl", 15);
 		killAuraHBannable = getOrSetDefault("KillAuraH.bannable", true);
-		killAuraHPunish = getOrSetDefault("KillAuraH.punish", "ban %player%");
+		killAuraHPunish = getStringList("KillAuraH.punish");
 
 		//CRITICALS
 		criticalsAEnabled = getOrSetDefault("CriticalsA.enabled", true);
 		criticalsAMaxVL = getOrSetDefault("CriticalsA.maxVl", 15);
 		criticalsABannable = getOrSetDefault("CriticalsA.bannable", true);
-		criticalsAPunish = getOrSetDefault("CriticalsA.punish", "ban %player%");
+		criticalsAPunish = getStringList("CriticalsA.punish");
 
 		criticalsBEnabled = getOrSetDefault("CriticalsB.enabled", true);
 		criticalsBMaxVL = getOrSetDefault("CriticalsB.maxVl", 15);
 		criticalsBBannable = getOrSetDefault("CriticalsB.bannable", true);
-		criticalsBPunish = getOrSetDefault("CriticalsB.punish", "ban %player%");
+		criticalsBPunish = getStringList("CriticalsB.punish");
 
 		//REACH
 		reachAEnabled = getOrSetDefault("ReachA.enabled", true);
 		reachAMaxVL = getOrSetDefault("ReachA.maxVl", 15);
 		reachABannable = getOrSetDefault("ReachA.bannable", true);
-		reachAPunish = getOrSetDefault("ReachA.punish", "ban %player%");
+		reachAPunish = getStringList("ReachA.punish");
 
 		//FASTBOW
 		fastBowAEnabled = getOrSetDefault("FastBowA.enabled", true);
 		fastBowAMaxVL = getOrSetDefault("FastBowA.maxVl", 15);
 		fastBowABannable = getOrSetDefault("FastBowA.bannable", true);
-		fastBowAPunish = getOrSetDefault("FastBowA.punish", "ban %player%");
+		fastBowAPunish = getStringList("FastBowA.punish");
 
 		fastBowBEnabled = getOrSetDefault("FastBowB.enabled", true);
 		fastBowBMaxVL = getOrSetDefault("FastBowB.maxVl", 15);
 		fastBowBBannable = getOrSetDefault("FastBowB.bannable", true);
-		fastBowBPunish = getOrSetDefault("FastBowB.punish", "ban %player%");
+		fastBowBPunish = getStringList("FastBowB.punish");
 
 		//BLINK
 		blinkAEnabled = getOrSetDefault("BlinkA.enabled", true);
 		blinkAMaxVL = getOrSetDefault("BlinkA.maxVl", 15);
 		blinkABannable = getOrSetDefault("BlinkA.bannable", true);
-		blinkAPunish = getOrSetDefault("BlinkA.punish", "ban %player%");
+		blinkAPunish = getStringList("BlinkA.punish");
 
 		//BADPACKETS
 		badPacketsAEnabled = getOrSetDefault("BadPacketsA.enabled", true);
 		badPacketsAMaxVL = getOrSetDefault("BadPacketsA.maxVl", 15);
 		badPacketsABannable = getOrSetDefault("BadPacketsA.bannable", true);
-		badPacketsAPunish = getOrSetDefault("BadPacketsA.punish", "ban %player%");
+		badPacketsAPunish = getStringList("BadPacketsA.punish");
 
 		badPacketsBEnabled = getOrSetDefault("BadPacketsB.enabled", true);
 		badPacketsBMaxVL = getOrSetDefault("BadPacketsB.maxVl", 15);
 		badPacketsBBannable = getOrSetDefault("BadPacketsB.bannable", true);
-		badPacketsBPunish = getOrSetDefault("BadPacketsB.punish", "ban %player%");
+		badPacketsBPunish = getStringList("BadPacketsB.punish");
 
 		badPacketsCEnabled = getOrSetDefault("BadPacketsC.enabled", true);
 		badPacketsCMaxVL = getOrSetDefault("BadPacketsC.maxVl", 15);
 		badPacketsCBannable = getOrSetDefault("BadPacketsC.bannable", true);
-		badPacketsCPunish = getOrSetDefault("BadPacketsC.punish", "ban %player%");
+		badPacketsCPunish = getStringList("BadPacketsC.punish");
 
 		badPacketsDEnabled = getOrSetDefault("BadPacketsD.enabled", true);
 		badPacketsDMaxVL = getOrSetDefault("BadPacketsD.maxVl", 15);
 		badPacketsDBannable = getOrSetDefault("BadPacketsD.bannable", true);
-		badPacketsDPunish = getOrSetDefault("BadPacketsD.punish", "ban %player%");
+		badPacketsDPunish = getStringList("BadPacketsD.punish");
 
 		//GROUNDSPOOF
 		groundSpoofAEnabled = getOrSetDefault("GroundSpoofA.enabled", true);
 		groundSpoofAMaxVL = getOrSetDefault("GroundSpoofA.maxVl", 15);
 		groundSpoofABannable = getOrSetDefault("GroundSpoofA.bannable", true);
-		groundSpoofAPunish = getOrSetDefault("GroundSpoofA.punish", "ban %player%");
+		groundSpoofAPunish = getStringList("GroundSpoofA.punish");
 
 		groundSpoofBEnabled = getOrSetDefault("GroundSpoofB.enabled", true);
 		groundSpoofBMaxVL = getOrSetDefault("GroundSpoofB.maxVl", 15);
 		groundSpoofBBannable = getOrSetDefault("GroundSpoofB.bannable", true);
-		groundSpoofBPunish = getOrSetDefault("GroundSpoofB.punish", "ban %player%");
+		groundSpoofBPunish = getStringList("GroundSpoofB.punish");
 
 		//TIMER
 		timerAEnabled = getOrSetDefault("TimerA.enabled", true);
 		timerAMaxVL = getOrSetDefault("TimerA.maxVl", 15);
 		timerABannable = getOrSetDefault("TimerA.bannable", true);
-		timerAPunish = getOrSetDefault("TimerA.punish", "ban %player%");
+		timerAPunish = getStringList("TimerA.punish");
 
 		timerBEnabled = getOrSetDefault("TimerB.enabled", true);
 		timerBMaxVL = getOrSetDefault("TimerB.maxVl", 15);
 		timerBBannable = getOrSetDefault("TimerB.bannable", true);
-		timerBPunish = getOrSetDefault("TimerB.punish", "ban %player%");
+		timerBPunish = getStringList("TimerB.punish");
 
 		//VELOCITY
 		velocityAEnabled = getOrSetDefault("VelocityA.enabled", true);
 		velocityAMaxVL = getOrSetDefault("VelocityA.maxVl", 15);
 		velocityABannable = getOrSetDefault("VelocityA.bannable", true);
-		velocityAPunish = getOrSetDefault("VelocityA.punish", "ban %player%");
+		velocityAPunish = getStringList("VelocityA.punish");
 
 		velocityBEnabled = getOrSetDefault("VelocityB.enabled", true);
 		velocityBMaxVL = getOrSetDefault("VelocityB.maxVl", 15);
 		velocityBBannable = getOrSetDefault("VelocityB.bannable", true);
-		velocityBPunish = getOrSetDefault("VelocityB.punish", "ban %player%");
+		velocityBPunish = getStringList("VelocityB.punish");
 
-		//VELOCITY
+		//INVALIDMOVEMENT
 		invalidMovementAEnabled = getOrSetDefault("InvalidMovementA.enabled", true);
 		invalidMovementAMaxVL = getOrSetDefault("InvalidMovementA.maxVl", 15);
 		invalidMovementABannable = getOrSetDefault("InvalidMovementA.bannable", true);
-		invalidMovementAPunish = getOrSetDefault("InvalidMovementA.punish", "ban %player%");
+		invalidMovementAPunish = getStringList("InvalidMovementA.punish");
+
 		invalidMovementBEnabled = getOrSetDefault("InvalidMovementB.enabled", true);
 		invalidMovementBMaxVL = getOrSetDefault("InvalidMovementB.maxVl", 15);
 		invalidMovementBBannable = getOrSetDefault("InvalidMovementB.bannable", true);
-		invalidMovementBPunish = getOrSetDefault("InvalidMovementB.punish", "ban %player%");
+		invalidMovementBPunish = getStringList("InvalidMovementB.punish");
+
+		invalidMovementBEnabled = getOrSetDefault("InvalidMovementC.enabled", true);
+		invalidMovementBMaxVL = getOrSetDefault("InvalidMovementC.maxVl", 15);
+		invalidMovementBBannable = getOrSetDefault("InvalidMovementC.bannable", true);
+		invalidMovementBPunish = getStringList("InvalidMovementC.punish");
 	}
 
 	@Override
@@ -645,7 +658,7 @@ public class ConfigManager extends YamlConfig {
 				"VelocityB.bannable", velocityBBannable,
 				"VelocityB.punish", velocityBPunish,
 
-				//VELOCITY
+				//INVALIDMOVEMENT
 				"InvalidMovementA.enabled", invalidMovementAEnabled,
 				"InvalidMovementA.maxVl", invalidMovementAMaxVL,
 				"InvalidMovementA.bannable", invalidMovementABannable,
@@ -654,8 +667,14 @@ public class ConfigManager extends YamlConfig {
 				"InvalidMovementB.enabled", invalidMovementBEnabled,
 				"InvalidMovementB.maxVl", invalidMovementBMaxVL,
 				"InvalidMovementB.bannable", invalidMovementBBannable,
-				"InvalidMovementB.punish", invalidMovementBPunish
+				"InvalidMovementB.punish", invalidMovementBPunish,
+
+				"InvalidMovementC.enabled", invalidMovementCEnabled,
+				"InvalidMovementC.maxVl", invalidMovementCMaxVL,
+				"InvalidMovementC.bannable", invalidMovementCBannable,
+				"InvalidMovementC.punish", invalidMovementCPunish
 
 		);
 	}
+
 }

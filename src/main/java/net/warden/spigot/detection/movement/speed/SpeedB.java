@@ -35,6 +35,8 @@ public class SpeedB extends PublicCheck {
 			if (time < 2000) return e;
 			long flight = System.currentTimeMillis() - user.getLastFlight();
 			if (flight < 5000) return e;
+			long water = System.currentTimeMillis() - user.getLastInWater();
+			if (water < 1000) return e;
 			if (event.getPlayer().isFlying())
 				return e;
 			if (Compatibility.isLegitVersion(event.getPlayer()))

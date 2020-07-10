@@ -32,6 +32,7 @@ public class JesusA extends PrivateCheck {
 			if (Compatibility.isInSpectator(((PacketReceiveEvent) event.getCauseEvent()).getPlayer())) return event;
 			if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) event.getCauseEvent()).getPacketId())) {
 				PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) event.getCauseEvent()).getPlayer().getUniqueId());
+				assert user != null;
 				if (user.getFrom() == null) return event;
 				long flight = System.currentTimeMillis() - user.getLastInWater();
 				if (flight < 2000) return event;

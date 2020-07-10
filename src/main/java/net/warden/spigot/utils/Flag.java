@@ -24,8 +24,9 @@ public class Flag {
 		String name = check.getName();
 		char type = check.getCheckType();
 		int vl = data.getVLCount(check);
+		if (data == null) return;
 		Player player = data.getPlayer();
-		if (SettingsManager.getInstance().getWorlds() != null) {
+		if (SettingsManager.getInstance().getWorlds() != null && !SettingsManager.getInstance().getWorlds().isEmpty()) {
 			if (SettingsManager.getInstance().getWorlds().contains(player.getWorld().getName().toLowerCase())) {
 				return;
 			}
@@ -83,6 +84,7 @@ public class Flag {
 	public static void punish(PlayerData user, String cheat, char type, int vl) {
 		if (user == null) return;
 		if (user.getPlayer() == null) return;
+		String name = user.getPlayer().getName();
 		if (user.getPlayer().hasPermission("warden.bypass")) return;
 		if (cheat.contains("Flight")) {
 			switch (type) {
@@ -93,7 +95,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFlightAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -103,7 +107,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFlightBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'C':
@@ -113,7 +119,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightCPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFlightCPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'D':
@@ -123,7 +131,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightDPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFlightDPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'E':
@@ -133,7 +143,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightEPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFlightEPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 
@@ -144,7 +156,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFlightFPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFlightFPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -157,7 +171,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getSpeedAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getSpeedAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -167,7 +183,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getSpeedBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getSpeedBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -180,7 +198,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getGroundSpoofAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getGroundSpoofAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -190,7 +210,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getGroundSpoofBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getGroundSpoofBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -203,7 +225,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getScaffoldAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getScaffoldAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -213,7 +237,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getScaffoldBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getScaffoldBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -226,7 +252,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getHighJumpAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getHighJumpAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -239,7 +267,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -249,7 +279,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'C':
@@ -259,7 +291,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraCPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraCPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'D':
@@ -269,7 +303,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraDPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraDPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'E':
@@ -279,7 +315,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraEPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraEPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'F':
@@ -289,7 +327,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraFPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraFPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'G':
@@ -299,7 +339,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraGPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraGPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'H':
@@ -309,7 +351,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getKillAuraHPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getKillAuraHPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -322,7 +366,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getCriticalsAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getCriticalsAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -332,7 +378,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getCriticalsBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getCriticalsBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -345,7 +393,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getBadPacketsAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -355,7 +405,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getBadPacketsBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'C':
@@ -365,7 +417,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getBadPacketsCPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getBadPacketsCPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -378,7 +432,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFastBowAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFastBowAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -388,7 +444,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getFastBowBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getFastBowBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -401,7 +459,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getTimerAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getTimerAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -411,7 +471,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getTimerBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getTimerBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -424,7 +486,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getVelocityAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getVelocityAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -434,7 +498,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getVelocityBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getVelocityBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -447,7 +513,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getJesusAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getJesusAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -457,7 +525,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getJesusBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getJesusBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -470,7 +540,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getReachAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getReachAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}
@@ -483,7 +555,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getInvalidMovementAPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getInvalidMovementAPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 				case 'B':
@@ -493,7 +567,9 @@ public class Flag {
 						if (event.isCancelled()) {
 							return;
 						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ConfigManager.getInstance().getInvalidMovementBPunish().replace("%player%", user.getPlayer().getName()));
+						ConfigManager.getInstance().getInvalidMovementBPunish().forEach(command -> {
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", name));
+						});
 					}
 					break;
 			}

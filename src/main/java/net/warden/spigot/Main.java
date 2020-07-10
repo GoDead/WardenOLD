@@ -20,6 +20,8 @@ import net.warden.spigot.detection.movement.flight.*;
 import net.warden.spigot.detection.movement.highjump.HighJumpA;
 import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementA;
 import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementB;
+import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementC;
+import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementD;
 import net.warden.spigot.detection.movement.jesus.JesusA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofA;
 import net.warden.spigot.detection.movement.nofall.GroundSpoofB;
@@ -39,7 +41,7 @@ import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.events.PublicCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.playerdata.PlayerDataManager;
-import net.warden.spigot.utils.MovementProcessor;
+import net.warden.spigot.utils.Processor;
 import net.warden.spigot.utils.UpdateChecker;
 import net.warden.spigot.utils.Version;
 import org.bukkit.plugin.Plugin;
@@ -116,7 +118,7 @@ public final class Main extends SimplePlugin implements PacketListener {
 	@Override
 	protected void onPluginStart() {
 		Common.log("&6Enabling Checks...");
-		registerEvents(new MovementProcessor());
+		registerEvents(new Processor());
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "warden:alerts");
 		registerCommand(new AlertCommand());
 		registerCommands("warden", new WardenCommand());
@@ -132,7 +134,7 @@ public final class Main extends SimplePlugin implements PacketListener {
 	public void start(Plugin plugin) {
 		PacketEvents.start(plugin);
 		PacketEvents.getAPI().getEventManager().registerListener(this);
-		PacketEvents.getAPI().getEventManager().registerListener(new MovementProcessor());
+		PacketEvents.getAPI().getEventManager().registerListener(new Processor());
 		registerEvents(new BadPacketsC());
 		getCheckManager().addCheck(new FlightB());
 		getCheckManager().addCheck(new FlightD());
@@ -143,6 +145,7 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new SpeedB());
 		getCheckManager().addCheck(new HighJumpA());
 		getCheckManager().addCheck(new InvalidMovementB());
+		getCheckManager().addCheck(new InvalidMovementC());
 		getCheckManager().addCheck(new ScaffoldA());
 		getCheckManager().addCheck(new CriticalsA());
 		getCheckManager().addCheck(new CriticalsB());
@@ -162,6 +165,7 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new FlightA(data));
 		getCheckManager().addCheck(new FlightC(data));
 		getCheckManager().addCheck(new FlightF(data));
+		getCheckManager().addCheck(new FlightG(data));
 		getCheckManager().addCheck(new JesusA(data));
 		getCheckManager().addCheck(new KillAuraA(data));
 		getCheckManager().addCheck(new KillAuraB(data));
@@ -172,9 +176,11 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new KillAuraF(data));
 		getCheckManager().addCheck(new KillAuraG(data));
 		getCheckManager().addCheck(new KillAuraH(data));
+		getCheckManager().addCheck(new KillAuraI(data));
 		getCheckManager().addCheck(new ScaffoldB(data));
 		registerEvents(new ScaffoldB(data));
 		getCheckManager().addCheck(new InvalidMovementA(data));
+		getCheckManager().addCheck(new InvalidMovementD(data));
 		getCheckManager().addCheck(new ReachA(data));
 		getCheckManager().addCheck(new FastBowA(data));
 		getCheckManager().addCheck(new FastBowB(data));

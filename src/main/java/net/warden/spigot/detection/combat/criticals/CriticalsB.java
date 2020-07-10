@@ -30,6 +30,7 @@ public class CriticalsB extends PublicCheck implements Listener {
 			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
+				if (Compatibility.isInSpectator(player)) return e;
 				PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
 				if (player.isInsideVehicle())
 					return e;
@@ -50,8 +51,7 @@ public class CriticalsB extends PublicCheck implements Listener {
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-		if (!player.getGameMode().equals(GameMode.SURVIVAL) && !player.getGameMode().equals(GameMode.ADVENTURE))
-			return;
+		if (player.getGameMode() == GameMode.CREATIVE) return;
 		if (event.getTo().getY() == event.getFrom().getY()) {
 			if (isOnGround.containsKey(player)) {
 				isOnGround.replace(player, true);

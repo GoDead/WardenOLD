@@ -10,6 +10,7 @@ import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -31,7 +32,8 @@ public class KillAuraE extends PrivateCheck {
 				Entity entity = packet.getEntity();
 				if (entity.getLocation().toVector().distance(player.getLocation().toVector()) > 1) {
 					if (!getNotLookingAt(player, entity)) {
-						flag();
+						if (!(entity instanceof EnderDragon))
+							flag();
 					}
 				}
 			}

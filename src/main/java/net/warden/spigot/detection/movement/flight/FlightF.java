@@ -43,7 +43,7 @@ public class FlightF extends PrivateCheck {
 				if (Compatibility.isLegitVersion(player))
 					return event;
 				if (user == null) return event;
-				if (!user.getPlayer().isOnGround() && !user.getPlayer().getLocation().getBlock().isLiquid() && user.getPlayer().getLocation().getBlock().getType() != Material.LADDER && user.getPlayer().getLocation().getBlock().getType() != Material.VINE) {
+				if (!user.getPlayer().isOnGround() && user.isOnGround() && !user.getPlayer().getLocation().getBlock().isLiquid() && user.getPlayer().getLocation().getBlock().getType() != Material.LADDER && user.getPlayer().getLocation().getBlock().getType() != Material.VINE) {
 					if (isVeryNearGround(user.getPlayer().getLocation())) {
 						if (isNearGround(user.getPlayer().getLocation()) && !player.isInsideVehicle()) {
 							if (isRoughlyEqual(user.getPlayer().getVelocity().length(), velocityExact))

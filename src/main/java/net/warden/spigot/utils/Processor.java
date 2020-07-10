@@ -15,16 +15,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.mineacademy.fo.region.Region;
 
 import java.util.List;
 
-public class MovementProcessor implements PacketListener, Listener {
+public class Processor implements PacketListener, Listener {
 
 	@PacketHandler
 	public static void process(PacketReceiveEvent event) {
@@ -144,5 +141,13 @@ public class MovementProcessor implements PacketListener, Listener {
 		PlayerData data = Main.getPlayerDataManager().find(player.getUniqueId());
 		if (data == null) return;
 		data.setLastVehicleAction(System.currentTimeMillis());
+	}
+
+	@EventHandler
+	public void teleport(PlayerTeleportEvent event) {
+		Player player = event.getPlayer();
+		PlayerData data = Main.getPlayerDataManager().find(player.getUniqueId());
+		if (data == null) return;
+		data.setLastTeleport(System.currentTimeMillis());
 	}
 }

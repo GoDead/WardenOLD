@@ -28,9 +28,11 @@ public final class PlayerData {
 	private long timeSinceJoin;
 	private long timeSinceDamage;
 	private long previousPreviousHit, previousHit, currentHit;
-	private long lastFlight, lastInWater, lastGameModeSwitch, lastLevitation;
+	private long lastFlight, lastInWater, lastGameModeSwitch, lastLevitation, lastTeleport;
 	private long timeSinceFlagD;
 	private long lastToggleFlight, lastExplosionDamage, lastVehicleAction, lastNearSlime;
+	private int hitsInARow;
+	private int successHits, unsuccessHits;
 
 	private final Map<Class<?>, Integer> violations = new HashMap<>();
 
@@ -262,6 +264,42 @@ public final class PlayerData {
 
 	public void setLastLevitation(long lastLevitation) {
 		this.lastLevitation = lastLevitation;
+	}
+
+	public long getLastTeleport() {
+		return lastTeleport;
+	}
+
+	public void setLastTeleport(long lastTeleport) {
+		this.lastTeleport = lastTeleport;
+	}
+
+	public int getHitsInARow() {
+		return hitsInARow;
+	}
+
+	public void setHitsInARow(int hitsInARow) {
+		this.hitsInARow = hitsInARow;
+	}
+
+	public void addHitsInARow(int amount) {
+		setHitsInARow(getHitsInARow() + amount);
+	}
+
+	public int getSuccessHits() {
+		return successHits;
+	}
+
+	public void setSuccessHits(int successHits) {
+		this.successHits = successHits;
+	}
+
+	public int getUnsuccessHits() {
+		return unsuccessHits;
+	}
+
+	public void setUnsuccessHits(int unsuccessHits) {
+		this.unsuccessHits = unsuccessHits;
 	}
 
 	public UUID getUniqueId() {
