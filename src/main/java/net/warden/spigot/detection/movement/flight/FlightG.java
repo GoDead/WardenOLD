@@ -40,7 +40,7 @@ public class FlightG extends PrivateCheck {
 				long glide = System.currentTimeMillis() - user.getLastGlide();
 				if (glide < 4000) return event;
 				if (player.isFlying()) return event;
-				if (user.isNear(XMaterial.LADDER) || user.isNear(XMaterial.VINE) || user.isNear(XMaterial.TWISTING_VINES) || user.isNear(XMaterial.WEEPING_VINES))
+				if (user.isNear(XMaterial.LADDER) || user.isNear(XMaterial.VINE) || user.isNear(XMaterial.TWISTING_VINES_PLANT) || user.isNear(XMaterial.WEEPING_VINES_PLANT))
 					return event;
 				long gm = System.currentTimeMillis() - user.getLastGameModeSwitch();
 				if (gm < 4000) return event;

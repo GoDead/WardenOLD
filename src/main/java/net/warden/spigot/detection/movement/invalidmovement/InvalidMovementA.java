@@ -40,7 +40,7 @@ public class InvalidMovementA extends PrivateCheck {
 				if (Compatibility.isLegitVersion(player)) return e;
 				long slime = System.currentTimeMillis() - user.getLastNearSlime();
 				if (slime < 8000) return e;
-				if (player.getAllowFlight()) return e;
+				if (player.isFlying()) return e;
 				if (user.isNearStairs(player.getLocation())) return e;
 				if (user.isNearSlabs(player.getLocation())) return e;
 				if (user.getDeltaY() != 0) {

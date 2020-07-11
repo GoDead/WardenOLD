@@ -25,8 +25,8 @@ public class FlightE extends PublicCheck {
 			PlayerData user = Main.getPlayerDataManager().find(((BukkitMoveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			Player player = user.getPlayer();
 			if (Compatibility.isLegitVersion(player)) return e;
-			if (event.getPlayer().getLocation().getBlock().getType().getData().getName().contains("CARPET")) return e;
-			if (event.getPlayer().getLocation().getBlock().getType().getData().getName().contains("CARPET")) return e;
+			if (event.getPlayer().getLocation().getBlock().toString().contains("CARPET")) return e;
+			if (event.getPlayer().getLocation().getBlock().toString().contains("CARPET")) return e;
 			if (!event.getPlayer().getLocation().getBlock().isLiquid() && !event.getPlayer().isOnGround() && !onGround(event.getPlayer()) && event.getPlayer().getVelocity().length() > 0.5) {
 				final double offsetXZ = Math.hypot(event.getTo().getX() - event.getFrom().getX(), event.getTo().getZ() - event.getFrom().getZ());
 				final double offsetY = event.getTo().getY() - event.getFrom().getY();

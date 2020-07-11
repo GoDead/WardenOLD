@@ -35,14 +35,14 @@ public class FlightH extends PrivateCheck {
 			if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) e.getCauseEvent()).getPacketId())) {
 				PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
-				if (player.isInsideVehicle() || player.isDead() || player.getAllowFlight() || player.getLocation().getBlock().isLiquid() || player.getLocation().clone().add(0, -1, 0).getBlock().isLiquid())
+				if (player.isInsideVehicle() || player.isDead() || player.isFlying() || player.getLocation().getBlock().isLiquid() || player.getLocation().clone().add(0, -1, 0).getBlock().isLiquid())
 					return e;
 				if (isNearBoat(player.getLocation())) return e;
 				assert user != null;
 				if (user.isOnGround()) return e;
 				if (user.isNearStairs(player.getLocation())) return e;
 				if (user.isNearSlabs(player.getLocation())) return e;
-				if (user.isNear(XMaterial.LADDER) || user.isNear(XMaterial.VINE) || user.isNear(XMaterial.TWISTING_VINES) || user.isNear(XMaterial.WEEPING_VINES))
+				if (user.isNear(XMaterial.LADDER) || user.isNear(XMaterial.VINE) || user.isNear(XMaterial.TWISTING_VINES_PLANT) || user.isNear(XMaterial.WEEPING_VINES_PLANT))
 					return e;
 				if (user.getTo() == null) return e;
 				float deltaY = (float) (user.getTo().getY() - user.getFrom().getY());
@@ -58,14 +58,14 @@ public class FlightH extends PrivateCheck {
 				long lastOnGround = System.currentTimeMillis() - user.getLastOnGround();
 				user.setLastDeltaY(lastDeltaY);
 				lastDeltaY = deltaY;
-				if (Math.abs(lastOnGround) > 2000 && deltaY > user.getLastDeltaY()) {
+				if (Math.abs(lastOnGround) > 700 && deltaY > user.getLastDeltaY()) {
 					if (verbose++ > 2)
 						flag();
 				} else {
 					verbose += verbose > 0 ? 0.1f : 0;
 				}
 				float accel = (float) (deltaY - user.getLastDeltaY());
-				if (Math.abs(lastOnGround) > 2000 && Math.abs(accel) < 0.01) {
+				if (Math.abs(lastOnGround) > 700 && Math.abs(accel) < 0.01) {
 					if (verbose++ > 3) {
 						flag();
 					}

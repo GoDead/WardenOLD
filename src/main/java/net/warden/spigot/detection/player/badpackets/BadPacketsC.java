@@ -1,7 +1,5 @@
 package net.warden.spigot.detection.player.badpackets;
 
-import io.github.retrooper.packetevents.PacketEvents;
-import io.github.retrooper.packetevents.enums.ServerVersion;
 import net.warden.spigot.Main;
 import net.warden.spigot.check.api.PublicCheck;
 import net.warden.spigot.check.api.data.Category;
@@ -29,8 +27,6 @@ public class BadPacketsC extends PublicCheck implements Listener {
 	public void blockPlace(BlockPlaceEvent event) {
 		if (!ConfigManager.getInstance().isBadPacketsCEnabled()) return;
 		if (Compatibility.isInSpectator(event.getPlayer())) return;
-		if (event.getBlockPlaced().getType() == XMaterial.TWISTING_VINES.parseMaterial() || event.getBlockPlaced().getType() == XMaterial.WEEPING_VINES.parseMaterial() || event.getBlockPlaced().getType() == XMaterial.LILY_PAD.parseMaterial())
-			return;
 		Block underBlock = event.getBlockPlaced().getRelative(0, -1, 0);
 		Block topBlock = event.getBlockPlaced().getRelative(0, 1, 0);
 
@@ -41,8 +37,7 @@ public class BadPacketsC extends PublicCheck implements Listener {
 		Block rightBlock = event.getBlockPlaced().getRelative(0, 0, -1);
 		PlayerData user = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 		if (underBlock.getType() == XMaterial.AIR.parseMaterial() && topBlock.getType() == XMaterial.AIR.parseMaterial() && infrontBlock.getType() == XMaterial.AIR.parseMaterial() && behindBlock.getType() == XMaterial.AIR.parseMaterial() && leftBlock.getType() == XMaterial.AIR.parseMaterial() && rightBlock.getType() == XMaterial.AIR.parseMaterial()) {
-			if (PacketEvents.getAPI().getServerUtilities().getServerVersion().isLowerThan(ServerVersion.v_1_9))
-				flag(user);
+			flag(user);
 		} else if (event.getBlockAgainst().isLiquid() || event.getBlockAgainst().getType() == XMaterial.AIR.parseMaterial()) {
 			flag(user);
 		} else if (event.getBlockAgainst() == event.getBlockPlaced()) {

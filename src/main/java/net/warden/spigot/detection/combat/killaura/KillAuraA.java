@@ -28,7 +28,7 @@ public class KillAuraA extends PrivateCheck {
 				if (packet.getAction() != EntityUseAction.ATTACK) return e;
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				if (player.getLocation().getPitch() == Math.round(player.getLocation().getPitch())) {
-					flag();
+					//flag();
 				}
 			}
 		}
