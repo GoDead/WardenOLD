@@ -10,7 +10,7 @@ public class PlayerUtils {
 		double expand = 0.3;
 		for (double x = -expand; x <= expand; x += expand) {
 			for (double z = -expand; z <= expand; z += expand) {
-				if (location.clone().add(x, -0.1, z).getBlock().getType().isSolid() || location.clone().add(x, -0.5001, z).getBlock().getType().isSolid()) {
+				if (location.clone().add(x, -0.1, z).getBlock().getType() != XMaterial.AIR.parseMaterial() || location.clone().add(x, -0.5001, z).getBlock().getType() != XMaterial.AIR.parseMaterial()) {
 					return true;
 				}
 			}

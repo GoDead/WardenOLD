@@ -43,6 +43,8 @@ public class SpeedA extends PublicCheck {
 			if (flight < 5000) return e;
 			long gm = System.currentTimeMillis() - user.getLastGameModeSwitch();
 			if (gm < 4000) return e;
+			if (user.isNearStairs(player.getLocation())) return e;
+			if (user.isNearSlabs(player.getLocation())) return e;
 			if (!runCheck(distance, event.getPlayer())) return e;
 			if (player.isInsideVehicle()) return e;
 			if (user.isNear(XMaterial.PACKED_ICE) || user.isNear(XMaterial.ICE) || user.isNear(XMaterial.FROSTED_ICE) || user.isNear(XMaterial.BLUE_ICE))

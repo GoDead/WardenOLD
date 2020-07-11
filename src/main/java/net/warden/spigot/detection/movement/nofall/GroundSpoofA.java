@@ -17,6 +17,8 @@ public class GroundSpoofA extends PublicCheck {
 		super("GroundSpoof", 'A', Category.MOVEMENT);
 	}
 
+	boolean previousWas;
+
 	@Override
 	public PublicCheckEvent onCheck(PublicCheckEvent e) {
 		//if (!ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return e;
@@ -35,8 +37,12 @@ public class GroundSpoofA extends PublicCheck {
 				if (!up && deltaYB > 0.4D && player.isOnGround()) {
 					Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 						if ((System.currentTimeMillis() - user.getTimeSinceDamage()) > 300)
-							flag(user);
+							if (previousWas)
+								flag(user);
+						previousWas = true;
 					}, 5);
+				} else {
+					previousWas = false;
 				}
 			}
 		}

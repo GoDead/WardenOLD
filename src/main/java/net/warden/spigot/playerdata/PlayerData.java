@@ -5,6 +5,7 @@ import net.warden.spigot.check.api.Check;
 import net.warden.spigot.utils.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.region.Region;
 
@@ -345,6 +346,30 @@ public final class PlayerData {
 			}
 		});
 		return !materialList.isEmpty();
+	}
+
+	public boolean isNearStairs(Location location) {
+		List<Boolean> stairs = new ArrayList<>();
+		Region region = new Region(location.clone().add(1, -0.5, 1), location.clone().add(-1, 0.5, -1));
+		List<Block> blocks = region.getBlocks();
+		blocks.forEach(block -> {
+			if (block.toString().toLowerCase().contains("stair")) {
+				stairs.add(true);
+			}
+		});
+		return !stairs.isEmpty();
+	}
+
+	public boolean isNearSlabs(Location location) {
+		List<Boolean> stairs = new ArrayList<>();
+		Region region = new Region(location.clone().add(1, -0.5, 1), location.clone().add(-1, 0.5, -1));
+		List<Block> blocks = region.getBlocks();
+		blocks.forEach(block -> {
+			if (block.toString().toLowerCase().contains("slab")) {
+				stairs.add(true);
+			}
+		});
+		return !stairs.isEmpty();
 	}
 
 	public UUID getUniqueId() {

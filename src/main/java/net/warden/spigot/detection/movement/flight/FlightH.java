@@ -40,6 +40,8 @@ public class FlightH extends PrivateCheck {
 				if (isNearBoat(player.getLocation())) return e;
 				assert user != null;
 				if (user.isOnGround()) return e;
+				if (user.isNearStairs(player.getLocation())) return e;
+				if (user.isNearSlabs(player.getLocation())) return e;
 				if (user.isNear(XMaterial.LADDER) || user.isNear(XMaterial.VINE) || user.isNear(XMaterial.TWISTING_VINES) || user.isNear(XMaterial.WEEPING_VINES))
 					return e;
 				if (user.getTo() == null) return e;

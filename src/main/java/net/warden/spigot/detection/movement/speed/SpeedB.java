@@ -42,6 +42,8 @@ public class SpeedB extends PublicCheck {
 			if (water < 1000) return e;
 			long gm = System.currentTimeMillis() - user.getLastGameModeSwitch();
 			if (gm < 4000) return e;
+			if (user.isNearStairs(event.getPlayer().getLocation())) return e;
+			if (user.isNearSlabs(event.getPlayer().getLocation())) return e;
 			if (event.getPlayer().isFlying())
 				return e;
 			if (Compatibility.isLegitVersion(event.getPlayer()))
