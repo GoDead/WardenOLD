@@ -8,6 +8,7 @@ import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.entityaction.WrappedPacketInEntityAction;
 import net.warden.spigot.Main;
 import net.warden.spigot.playerdata.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -27,9 +28,11 @@ public class Processor implements PacketListener, Listener {
 	public static void process(PacketReceiveEvent event) {
 		PlayerData data = Main.getPlayerDataManager().find(event.getPlayer().getUniqueId());
 		if (data != null) {
-			if (PlayerUtils.onGround(event.getPlayer())) {
-				data.setOnGround(true);
-			} else data.setOnGround(false);
+			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+				if (PlayerUtils.onGround(event.getPlayer())) {
+					data.setOnGround(true);
+				} else data.setOnGround(false);
+			});
 
 			data.setLastLocation(data.getLocation() != null ? data.getLocation() : event.getPlayer().getLocation());
 			data.setLocation(event.getPlayer().getLocation());

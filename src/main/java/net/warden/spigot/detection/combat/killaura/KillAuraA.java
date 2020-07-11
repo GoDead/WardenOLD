@@ -10,14 +10,13 @@ import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
+import org.bukkit.entity.Player;
 
 public class KillAuraA extends PrivateCheck {
 	public KillAuraA(PlayerData data) {
 		super(data, "KillAura", 'A', Category.COMBAT);
 	}
 
-	long previousTimeStamp = 0;
-	long previousDifference = 0;
 
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
@@ -27,19 +26,10 @@ public class KillAuraA extends PrivateCheck {
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
 				WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
 				if (packet.getAction() != EntityUseAction.ATTACK) return e;
-				if (previousTimeStamp == 0) {
-					previousTimeStamp = e.getTimestamp();
-					return e;
+				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
+				if (player.getLocation().getPitch() == Math.round(player.getLocation().getPitch())) {
+					flag();
 				}
-				long difference = e.getTimestamp() - previousTimeStamp;
-				if (previousDifference == 0) {
-					previousDifference = difference;
-					return e;
-				}
-				if (difference <= 49 && previousDifference <= 49) {
-					//flag();
-				}
-				previousTimeStamp = e.getTimestamp();
 			}
 		}
 		return e;

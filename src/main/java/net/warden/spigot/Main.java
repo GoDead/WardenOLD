@@ -166,6 +166,7 @@ public final class Main extends SimplePlugin implements PacketListener {
 		getCheckManager().addCheck(new FlightC(data));
 		getCheckManager().addCheck(new FlightF(data));
 		getCheckManager().addCheck(new FlightG(data));
+		getCheckManager().addCheck(new FlightH(data));
 		getCheckManager().addCheck(new JesusA(data));
 		getCheckManager().addCheck(new KillAuraA(data));
 		getCheckManager().addCheck(new KillAuraB(data));

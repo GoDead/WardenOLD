@@ -29,7 +29,7 @@ public class BadPacketsC extends PublicCheck implements Listener {
 	public void blockPlace(BlockPlaceEvent event) {
 		if (!ConfigManager.getInstance().isBadPacketsCEnabled()) return;
 		if (Compatibility.isInSpectator(event.getPlayer())) return;
-		if (event.getBlockPlaced().getType() == XMaterial.TWISTING_VINES.parseMaterial() || event.getBlockPlaced().getType() == XMaterial.WEEPING_VINES.parseMaterial())
+		if (event.getBlockPlaced().getType() == XMaterial.TWISTING_VINES.parseMaterial() || event.getBlockPlaced().getType() == XMaterial.WEEPING_VINES.parseMaterial() || event.getBlockPlaced().getType() == XMaterial.LILY_PAD.parseMaterial())
 			return;
 		Block underBlock = event.getBlockPlaced().getRelative(0, -1, 0);
 		Block topBlock = event.getBlockPlaced().getRelative(0, 1, 0);

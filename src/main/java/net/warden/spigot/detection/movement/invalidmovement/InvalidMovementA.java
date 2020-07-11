@@ -31,6 +31,7 @@ public class InvalidMovementA extends PrivateCheck {
 				PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				if (Compatibility.isInSpectator(player)) return e;
+				if (player.isBlocking()) return e;
 				if (player.isInsideVehicle()) return e;
 				assert user != null;
 				long teleport = System.currentTimeMillis() - user.getLastTeleport();

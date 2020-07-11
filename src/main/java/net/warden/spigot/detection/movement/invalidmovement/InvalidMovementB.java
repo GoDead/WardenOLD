@@ -11,6 +11,7 @@ import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
 import org.bukkit.Location;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -33,7 +34,7 @@ public class InvalidMovementB extends PublicCheck {
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				if (Compatibility.isLegitVersion(player)) return e;
 				assert user != null;
-				if (user.getDeltaY() < 0.005 && user.getDeltaY() > 0 && !isNearBoat(user.getPlayer().getLocation())) {//funkemunky
+				if (user.getDeltaY() < 0.005 && user.getDeltaY() > 0 && !isNearBoat(user.getPlayer().getLocation()) && !hasDepthStrider(player)) {//funkemunky
 					flag(user);
 				}
 			}
@@ -56,5 +57,12 @@ public class InvalidMovementB extends PublicCheck {
 				ent.add(e);
 		}
 		return ent;
+	}
+
+	public static boolean hasDepthStrider(Player player) {
+		if (player.getInventory().getBoots() == null) return false;
+		if (player.getInventory().getBoots().containsEnchantment(Enchantment.DEPTH_STRIDER))
+			return true;
+		return false;
 	}
 }

@@ -94,6 +94,7 @@ public class Compatibility {
 		list.add(V_1_9.isNearShulkerBox(player.getLocation()));
 		list.add(V_1_13.hasLevitation(player));
 		list.add(V_1_13.isRiptiding(player));
+		list.add(V_1_13.isSwimming(player));
 		list.add(V_1_14.isNearBerryBush(player.getLocation()));
 		list.add(V_1_15.isNearHoney(player.getLocation()));
 		list.add(V_1_16.hasSoulSpeed(player));

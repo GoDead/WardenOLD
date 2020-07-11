@@ -6,6 +6,7 @@ import io.github.retrooper.packetevents.enums.minecraft.EntityUseAction;
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
 import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.useentity.WrappedPacketInUseEntity;
+import net.warden.spigot.Main;
 import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
@@ -27,6 +28,7 @@ public class KillAuraC extends PrivateCheck {
 		if (!(ConfigManager.getInstance().isKillAuraCEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
 			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
+			PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.ARM_ANIMATION) {
 				lastSwing = System.currentTimeMillis();
 			} else if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.USE_ENTITY) {
@@ -42,7 +44,8 @@ public class KillAuraC extends PrivateCheck {
 						Entity entity = packetInUseEntity.getEntity();
 						if (entity.getLocation().toVector().distance(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getLocation().toVector()) < 1.2)
 							return e;
-						flag();
+						if (user.getHitsInARow() > 8)
+							flag();
 					} else {
 						comply();
 					}

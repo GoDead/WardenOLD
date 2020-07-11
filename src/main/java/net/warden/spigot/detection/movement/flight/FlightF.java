@@ -43,6 +43,8 @@ public class FlightF extends PrivateCheck {
 				if (Compatibility.isLegitVersion(player))
 					return event;
 				if (user == null) return event;
+				if (!isInAirCube(player)) return event;
+				if (player.isBlocking()) return event;
 				if (!user.getPlayer().isOnGround() && user.isOnGround() && !user.getPlayer().getLocation().getBlock().isLiquid() && user.getPlayer().getLocation().getBlock().getType() != Material.LADDER && user.getPlayer().getLocation().getBlock().getType() != Material.VINE) {
 					if (isVeryNearGround(user.getPlayer().getLocation())) {
 						if (isNearGround(user.getPlayer().getLocation()) && !player.isInsideVehicle()) {
@@ -138,5 +140,19 @@ public class FlightF extends PrivateCheck {
 		List<Block> blocks = region.getBlocks();
 		blocks.removeIf(block -> block.getType() != XMaterial.COBWEB.parseMaterial());
 		return !blocks.isEmpty();
+	}
+
+	private boolean isInAirCube(Player player) {
+		List<Boolean> areAir = new ArrayList<>();
+		Location location = player.getLocation();
+		Region region = new Region(location.clone().add(1, 0, 1), location.clone().add(-1, 2, -1));
+		region.getBlocks().forEach(block -> {
+			if (block.getType() == XMaterial.AIR.parseMaterial()) {
+				areAir.add(true);
+			} else {
+				areAir.clear();
+			}
+		});
+		return areAir.size() >= 3 * 3 * 3;
 	}
 }

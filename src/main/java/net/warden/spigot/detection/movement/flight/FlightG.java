@@ -8,6 +8,7 @@ import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
+import net.warden.spigot.utils.ConfigManager;
 import net.warden.spigot.utils.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,28 +23,35 @@ public class FlightG extends PrivateCheck {
 		super(data, "Flight", 'G', Category.MOVEMENT);
 	}
 
-	long lastOnGround;
 
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent event) {
+		if (!ConfigManager.getInstance().isFlightGEnabled()) return event;
 		if (event.getCauseEvent() instanceof PacketReceiveEvent) {
 			if (Compatibility.isInSpectator(((PacketReceiveEvent) event.getCauseEvent()).getPlayer())) return event;
 			if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) event.getCauseEvent()).getPacketId())) {
 				PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) event.getCauseEvent()).getPlayer().getUniqueId());
 				Player player = ((PacketReceiveEvent) event.getCauseEvent()).getPlayer();
+				assert user != null;
 				if (user.isOnGround()) {
-					lastOnGround = System.currentTimeMillis();
+					user.setLastOnGround(System.currentTimeMillis());
 					return event;
 				}
+				long glide = System.currentTimeMillis() - user.getLastGlide();
+				if (glide < 4000) return event;
 				if (player.isFlying()) return event;
-				assert user != null;
+				if (user.isNear(XMaterial.LADDER) || user.isNear(XMaterial.VINE) || user.isNear(XMaterial.TWISTING_VINES) || user.isNear(XMaterial.WEEPING_VINES))
+					return event;
+				long gm = System.currentTimeMillis() - user.getLastGameModeSwitch();
+				if (gm < 4000) return event;
 				long time = System.currentTimeMillis() - user.getTimeSinceDamage();
 				if (time < 2000) return event;
 				long explosion = System.currentTimeMillis() - user.getLastExplosionDamage();
 				if (explosion < 10000) return event;
 				if (Compatibility.isLegitVersion(player))
 					return event;
-				long lastOnGround = System.currentTimeMillis() - this.lastOnGround;
+				long lastOnGround = System.currentTimeMillis() - user.getLastOnGround();
+				//Common.broadcast(lastOnGround + "");
 				if (lastOnGround < 3000) return event;
 				if (isInAirCube(player) && user.getDeltaY() > 0) {
 					flag();

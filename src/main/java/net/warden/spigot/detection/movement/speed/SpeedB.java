@@ -8,7 +8,10 @@ import net.warden.spigot.events.PublicCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
+import net.warden.spigot.utils.XMaterial;
 import org.bukkit.GameMode;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -37,6 +40,8 @@ public class SpeedB extends PublicCheck {
 			if (flight < 5000) return e;
 			long water = System.currentTimeMillis() - user.getLastInWater();
 			if (water < 1000) return e;
+			long gm = System.currentTimeMillis() - user.getLastGameModeSwitch();
+			if (gm < 4000) return e;
 			if (event.getPlayer().isFlying())
 				return e;
 			if (Compatibility.isLegitVersion(event.getPlayer()))
@@ -45,6 +50,8 @@ public class SpeedB extends PublicCheck {
 				event.getPlayer().sendMessage(Math.abs(event.getPlayer().getWalkSpeed()) + " " + Math.abs(0.3));
 				return e;
 			}
+			if (user.isNear(XMaterial.PACKED_ICE) || user.isNear(XMaterial.ICE) || user.isNear(XMaterial.FROSTED_ICE) || user.isNear(XMaterial.BLUE_ICE))
+				return e;
 			if (event.getPlayer().isInsideVehicle()) return e;
 			Vector from = event.getFrom().toVector().clone().setY(0);
 			Vector to = event.getTo().toVector().clone().setY(0);
@@ -65,5 +72,12 @@ public class SpeedB extends PublicCheck {
 			}
 		}
 		return e;
+	}
+
+	public static boolean hasDepthStrider(Player player) {
+		if (player.getInventory().getBoots() == null) return false;
+		if (player.getInventory().getBoots().containsEnchantment(Enchantment.DEPTH_STRIDER))
+			return true;
+		return false;
 	}
 }

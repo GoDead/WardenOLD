@@ -4,6 +4,7 @@ import net.warden.spigot.Main;
 import net.warden.spigot.detection.combat.criticals.CriticalsA;
 import net.warden.spigot.detection.combat.criticals.CriticalsB;
 import net.warden.spigot.detection.combat.killaura.*;
+import net.warden.spigot.detection.combat.reach.ReachA;
 import net.warden.spigot.detection.movement.flight.*;
 import net.warden.spigot.detection.movement.highjump.HighJumpA;
 import net.warden.spigot.detection.movement.invalidmovement.InvalidMovementA;
@@ -52,6 +53,7 @@ public class Violation extends SimpleSubCommand {
 			return;
 		}
 		PlayerData user = Main.getPlayerDataManager().find(player.getUniqueId());
+		assert user != null;
 		if (user.getViolationsMap().isEmpty() || getTotalVL(user) <= 0) {
 			tell("&cWarden &8» &7" + player.getName() + " &7doesn't have any violations!");
 			return;
@@ -71,6 +73,8 @@ public class Violation extends SimpleSubCommand {
 			tell(" &f- &cScaffold: &f" + getScaffoldVL(user));
 		if (getKillAuraVL(user) != 0)
 			tell(" &f- &cKillAura: &f" + getKillAuraVL(user));
+		if (getReachVL(user) != 0)
+			tell(" &f- &cReach: &f" + getReachVL(user));
 		if (getCriticalsVL(user) != 0)
 			tell(" &f- &cCriticals: &f" + getCriticalsVL(user));
 		if (getBadPacketsVL(user) != 0)
@@ -93,6 +97,7 @@ public class Violation extends SimpleSubCommand {
 				+ getHighJumpVL(user)
 				+ getScaffoldVL(user)
 				+ getKillAuraVL(user)
+				+ getReachVL(user)
 				+ getCriticalsVL(user)
 				+ getBadPacketsVL(user)
 				+ getFastBowVL(user)
@@ -108,7 +113,9 @@ public class Violation extends SimpleSubCommand {
 				+ user.getViolationsMap().getOrDefault(FlightC.class, 0)
 				+ user.getViolationsMap().getOrDefault(FlightD.class, 0)
 				+ user.getViolationsMap().getOrDefault(FlightE.class, 0)
-				+ user.getViolationsMap().getOrDefault(FlightF.class, 0);
+				+ user.getViolationsMap().getOrDefault(FlightF.class, 0)
+				+ user.getViolationsMap().getOrDefault(FlightG.class, 0)
+				+ user.getViolationsMap().getOrDefault(FlightH.class, 0);
 		return VL;
 	}
 
@@ -148,7 +155,13 @@ public class Violation extends SimpleSubCommand {
 				+ user.getViolationsMap().getOrDefault(KillAuraE.class, 0)
 				+ user.getViolationsMap().getOrDefault(KillAuraF.class, 0)
 				+ user.getViolationsMap().getOrDefault(KillAuraG.class, 0)
-				+ user.getViolationsMap().getOrDefault(KillAuraH.class, 0);
+				+ user.getViolationsMap().getOrDefault(KillAuraH.class, 0)
+				+ user.getViolationsMap().getOrDefault(KillAuraI.class, 0);
+		return VL;
+	}
+
+	private int getReachVL(PlayerData user) {
+		int VL = user.getViolationsMap().getOrDefault(ReachA.class, 0);
 		return VL;
 	}
 

@@ -6,6 +6,7 @@ import io.github.retrooper.packetevents.enums.minecraft.EntityUseAction;
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
 import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.useentity.WrappedPacketInUseEntity;
+import net.warden.spigot.Main;
 import net.warden.spigot.check.api.PrivateCheck;
 import net.warden.spigot.check.api.data.Category;
 import net.warden.spigot.events.PrivateCheckEvent;
@@ -26,6 +27,7 @@ public class BadPacketsA extends PrivateCheck {
 		if (!ServerVersion.getVersion().isLowerThan(ServerVersion.v_1_9)) return e;
 		if (!(ConfigManager.getInstance().isBadPacketsAEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
+			PlayerData user = Main.getPlayerDataManager().find(((PacketReceiveEvent) e.getCauseEvent()).getPlayer().getUniqueId());
 			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			if (((PacketReceiveEvent) e.getCauseEvent()).getPacketId() == PacketType.Client.ARM_ANIMATION) {
 				wasLastArmAnimation = true;
@@ -36,7 +38,10 @@ public class BadPacketsA extends PrivateCheck {
 					if (PacketEvents.getAPI().getPlayerUtilities().getPing(((PacketReceiveEvent) e.getCauseEvent()).getPlayer()) < 30)
 						flag();
 				} else {
-					comply();
+					if (user.getVLCount(this) <= 0)
+						user.setVLCount(this, 0);
+					if (user.getVLCount(this) > 0)
+						user.decrementVL(this);
 				}
 			} else if (PacketType.Client.Util.isInstanceOfFlying(((PacketReceiveEvent) e.getCauseEvent()).getPacketId())) {
 				wasLastArmAnimation = false;

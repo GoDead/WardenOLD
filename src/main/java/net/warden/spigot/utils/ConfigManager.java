@@ -43,6 +43,16 @@ public class ConfigManager extends YamlConfig {
 	private boolean flightFBannable;
 	private List<String> flightFPunish;
 
+	private boolean flightGEnabled;
+	private int flightGMaxVL;
+	private boolean flightGBannable;
+	private List<String> flightGPunish;
+
+	private boolean flightHEnabled;
+	private int flightHMaxVL;
+	private boolean flightHBannable;
+	private List<String> flightHPunish;
+
 	//SPEED
 	private boolean speedAEnabled;
 	private int speedAMaxVL;
@@ -122,6 +132,16 @@ public class ConfigManager extends YamlConfig {
 	private int killAuraHMaxVL;
 	private boolean killAuraHBannable;
 	private List<String> killAuraHPunish;
+
+	private boolean killAuraIEnabled;
+	private int killAuraIMaxVL;
+	private boolean killAuraIBannable;
+	private List<String> killAuraIPunish;
+
+	private boolean killAuraJEnabled;
+	private int killAuraJMaxVL;
+	private boolean killAuraJBannable;
+	private List<String> killAuraJPunish;
 
 	//CRITICALS
 	private boolean criticalsAEnabled;
@@ -271,6 +291,16 @@ public class ConfigManager extends YamlConfig {
 		flightFBannable = getOrSetDefault("FlightF.bannable", true);
 		flightFPunish = getStringList("FlightF.punish");
 
+		flightGEnabled = getOrSetDefault("FlightG.enabled", true);
+		flightGMaxVL = getOrSetDefault("FlightG.maxVl", 15);
+		flightGBannable = getOrSetDefault("FlightG.bannable", true);
+		flightGPunish = getStringList("FlightG.punish");
+
+		flightHEnabled = getOrSetDefault("FlightH.enabled", true);
+		flightHMaxVL = getOrSetDefault("FlightH.maxVl", 15);
+		flightHBannable = getOrSetDefault("FlightH.bannable", true);
+		flightHPunish = getStringList("FlightH.punish");
+
 		//SPEED
 		speedAEnabled = getOrSetDefault("SpeedA.enabled", true);
 		speedAMaxVL = getOrSetDefault("SpeedA.maxVl", 15);
@@ -350,6 +380,16 @@ public class ConfigManager extends YamlConfig {
 		killAuraHMaxVL = getOrSetDefault("KillAuraH.maxVl", 15);
 		killAuraHBannable = getOrSetDefault("KillAuraH.bannable", true);
 		killAuraHPunish = getStringList("KillAuraH.punish");
+
+		killAuraIEnabled = getOrSetDefault("KillAuraI.enabled", true);
+		killAuraIMaxVL = getOrSetDefault("KillAuraI.maxVl", 15);
+		killAuraIBannable = getOrSetDefault("KillAuraI.bannable", true);
+		killAuraIPunish = getStringList("KillAuraI.punish");
+
+		killAuraJEnabled = getOrSetDefault("KillAuraJ.enabled", true);
+		killAuraJMaxVL = getOrSetDefault("KillAuraJ.maxVl", 15);
+		killAuraJBannable = getOrSetDefault("KillAuraJ.bannable", true);
+		killAuraJPunish = getStringList("KillAuraJ.punish");
 
 		//CRITICALS
 		criticalsAEnabled = getOrSetDefault("CriticalsA.enabled", true);
@@ -490,6 +530,16 @@ public class ConfigManager extends YamlConfig {
 				"FlightF.bannable", flightFBannable,
 				"FlightF.punish", flightFPunish,
 
+				"FlightG.enabled", flightGEnabled,
+				"FlightG.maxVl", flightGMaxVL,
+				"FlightG.bannable", flightGBannable,
+				"FlightG.punish", flightGPunish,
+
+				"FlightH.enabled", flightHEnabled,
+				"FlightH.maxVl", flightHMaxVL,
+				"FlightH.bannable", flightHBannable,
+				"FlightH.punish", flightHPunish,
+
 				//SPEED
 				"SpeedA.enabled", speedAEnabled,
 				"SpeedA.maxVl", speedAMaxVL,
@@ -569,6 +619,16 @@ public class ConfigManager extends YamlConfig {
 				"KillAuraH.maxVl", killAuraHMaxVL,
 				"KillAuraH.bannable", killAuraHBannable,
 				"KillAuraH.punish", killAuraHPunish,
+
+				"KillAuraI.enabled", killAuraIEnabled,
+				"KillAuraI.maxVl", killAuraIMaxVL,
+				"KillAuraI.bannable", killAuraIBannable,
+				"KillAuraI.punish", killAuraIPunish,
+
+				"KillAuraJ.enabled", killAuraJEnabled,
+				"KillAuraJ.maxVl", killAuraJMaxVL,
+				"KillAuraJ.bannable", killAuraJBannable,
+				"KillAuraJ.punish", killAuraJPunish,
 
 				//CRITICALS
 				"CriticalsA.enabled", criticalsAEnabled,

@@ -21,10 +21,13 @@ public class KillAuraI extends PrivateCheck {
 	float pitchDiff;
 	float previousPitchDiff;
 
+	float diffDiff;
+	float previousDiffDiff;
+
 
 	@Override
 	public PrivateCheckEvent onCheck(PrivateCheckEvent e) {
-		if (!(ConfigManager.getInstance().isKillAuraFEnabled())) return e;
+		if (!(ConfigManager.getInstance().isKillAuraIEnabled())) return e;
 		if (e.getCauseEvent() instanceof PacketReceiveEvent) {
 			if (Compatibility.isInSpectator(((PacketReceiveEvent) e.getCauseEvent()).getPlayer())) return e;
 			int packet = ((PacketReceiveEvent) e.getCauseEvent()).getPacketId();
@@ -45,8 +48,19 @@ public class KillAuraI extends PrivateCheck {
 				if (String.valueOf(difference).contains("E")) {
 					flag();
 				}
-				if (pitchDiff > 15 && user.getHitsInARow() > 15) {
+				previousDiffDiff = this.diffDiff;
+				this.diffDiff = difference;
+				float diffDifference = Math.abs(Math.abs(previousDiffDiff) - Math.abs(diffDiff));
+				if (String.valueOf(diffDifference).contains("E")) {
 					flag();
+				}
+				if (diffDifference > 30 && user.getHitsInARow() > 5) {
+					flag();
+					//Common.broadcast("&d" + diffDifference + " &f" + distance);
+				}
+				if (pitchDiff > 15 && user.getHitsInARow() > 12 && distance > 0.3) {
+					flag();
+					//Common.broadcast("&b" + pitchDiff + " &f" + distance);
 				}
 			}
 		}

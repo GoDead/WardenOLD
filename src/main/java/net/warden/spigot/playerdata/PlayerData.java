@@ -2,13 +2,13 @@ package net.warden.spigot.playerdata;
 
 import io.github.retrooper.packetevents.enums.ClientVersion;
 import net.warden.spigot.check.api.Check;
+import net.warden.spigot.utils.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.mineacademy.fo.region.Region;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public final class PlayerData {
 	private final UUID uuid;
@@ -23,14 +23,14 @@ public final class PlayerData {
 
 	private Location location, lastLocation, to, from;
 	private ClientVersion clientVersion;
-	private double deltaXZ, deltaY;
+	private double deltaXZ, deltaY, lastDeltaXZ, lastDeltaY;
 	private boolean isSprinting, isSneaking, onGround;
 	private long timeSinceJoin;
 	private long timeSinceDamage;
 	private long previousPreviousHit, previousHit, currentHit;
-	private long lastFlight, lastInWater, lastGameModeSwitch, lastLevitation, lastTeleport;
+	private long lastFlight, lastInWater, lastGameModeSwitch, lastLevitation, lastTeleport, lastGlide;
 	private long timeSinceFlagD;
-	private long lastToggleFlight, lastExplosionDamage, lastVehicleAction, lastNearSlime;
+	private long lastToggleFlight, lastExplosionDamage, lastVehicleAction, lastNearSlime, lastOnGround;
 	private int hitsInARow;
 	private int successHits, unsuccessHits;
 
@@ -300,6 +300,51 @@ public final class PlayerData {
 
 	public void setUnsuccessHits(int unsuccessHits) {
 		this.unsuccessHits = unsuccessHits;
+	}
+
+	public double getLastDeltaXZ() {
+		return lastDeltaXZ;
+	}
+
+	public void setLastDeltaXZ(double lastDeltaXZ) {
+		this.lastDeltaXZ = lastDeltaXZ;
+	}
+
+	public double getLastDeltaY() {
+		return lastDeltaY;
+	}
+
+	public void setLastDeltaY(double lastDeltaY) {
+		this.lastDeltaY = lastDeltaY;
+	}
+
+	public long getLastOnGround() {
+		return lastOnGround;
+	}
+
+	public void setLastOnGround(long lastOnGround) {
+		this.lastOnGround = lastOnGround;
+	}
+
+	public long getLastGlide() {
+		return lastGlide;
+	}
+
+	public void setLastGlide(long lastGlide) {
+		this.lastGlide = lastGlide;
+	}
+
+	public boolean isNear(XMaterial material) {
+		if (!material.isSupported()) return false;
+		List<Boolean> materialList = new ArrayList<>();
+		if (getTo() == null) return false;
+		Region region = new Region(getTo().clone().add(1, -1, 1), getTo().clone().add(-1, 1, -1));
+		region.getBlocks().forEach(block -> {
+			if (block.getType() == material.parseMaterial()) {
+				materialList.add(true);
+			}
+		});
+		return !materialList.isEmpty();
 	}
 
 	public UUID getUniqueId() {

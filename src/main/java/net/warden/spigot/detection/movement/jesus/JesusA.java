@@ -9,6 +9,7 @@ import net.warden.spigot.events.PrivateCheckEvent;
 import net.warden.spigot.playerdata.PlayerData;
 import net.warden.spigot.utils.Compatibility;
 import net.warden.spigot.utils.ConfigManager;
+import net.warden.spigot.utils.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -39,7 +40,7 @@ public class JesusA extends PrivateCheck {
 				Player player = ((PacketReceiveEvent) event.getCauseEvent()).getPlayer();
 				if (player.isInsideVehicle() || player.isDead() || player.getAllowFlight())
 					return event;
-				if (isNearWater(user.getTo()) && !player.getLocation().getBlock().isLiquid()) {
+				if (isNearWater(user.getTo()) && !isLilyPad(user.getTo()) && !player.getLocation().getBlock().isLiquid()) {
 					if (!isNearBoat(player.getLocation()))
 						flag();
 				} else {
@@ -60,7 +61,7 @@ public class JesusA extends PrivateCheck {
 	private boolean isNearBoat(Location location) {
 		List<Entity> ent = getEntitiesByLocation(location, 10);
 		//Common.broadcast(ent.toString());
-		if (ent.toString().contains("Boat") || ent.toString().contains("Minecart"))
+		if (ent.toString().toLowerCase().contains("boat") || ent.toString().toLowerCase().contains("minecart"))
 			return true;
 		return false;
 	}
@@ -87,6 +88,22 @@ public class JesusA extends PrivateCheck {
 				blocks.get(6).isLiquid() &&
 				blocks.get(7).isLiquid() &&
 				blocks.get(8).isLiquid()
+		);
+	}
+
+	private boolean isLilyPad(Location location) {
+		Region region = new Region(location.clone().add(1, 0, 1), location.clone().add(-1, 0, -1));
+		List<Block> blocks = region.getBlocks();
+		if (blocks.size() != 9) return false;
+		return (blocks.get(0).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(1).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(2).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(3).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(4).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(5).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(6).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(7).getType() == XMaterial.LILY_PAD.parseMaterial() ||
+				blocks.get(8).getType() == XMaterial.LILY_PAD.parseMaterial()
 		);
 	}
 }
