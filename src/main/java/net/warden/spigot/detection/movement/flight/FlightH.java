@@ -37,6 +37,7 @@ public class FlightH extends PrivateCheck {
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				if (player.isInsideVehicle() || player.isDead() || player.isFlying() || player.getLocation().getBlock().isLiquid() || player.getLocation().clone().add(0, -1, 0).getBlock().isLiquid())
 					return e;
+				//Common.broadcast(player.getLocation().clone().add(0, -1, 0).getBlock().toString());
 				if (isNearBoat(player.getLocation())) return e;
 				assert user != null;
 				if (user.isOnGround()) return e;

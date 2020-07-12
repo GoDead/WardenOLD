@@ -30,6 +30,7 @@ public class KillAuraE extends PrivateCheck {
 				if (packet.getAction() != EntityUseAction.ATTACK) return e;
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				Entity entity = packet.getEntity();
+				if (entity == null || player == null) return e;
 				if (entity.getLocation().toVector().distance(player.getLocation().toVector()) > 1) {
 					if (!getNotLookingAt(player, entity)) {
 						if (!(entity instanceof EnderDragon))

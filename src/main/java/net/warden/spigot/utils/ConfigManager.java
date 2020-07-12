@@ -247,6 +247,12 @@ public class ConfigManager extends YamlConfig {
 	private boolean invalidMovementCBannable;
 	private List<String> invalidMovementCPunish;
 
+	//PINGSPOOF
+	private boolean pingSpoofAEnabled;
+	private int pingSpoofAMaxVL;
+	private boolean pingSpoofABannable;
+	private List<String> pingSpoofAPunish;
+
 
 	public ConfigManager() {
 		setHeader("Warden Checks Configuration");
@@ -490,10 +496,16 @@ public class ConfigManager extends YamlConfig {
 		invalidMovementBBannable = getOrSetDefault("InvalidMovementB.bannable", true);
 		invalidMovementBPunish = getStringList("InvalidMovementB.punish");
 
-		invalidMovementBEnabled = getOrSetDefault("InvalidMovementC.enabled", true);
-		invalidMovementBMaxVL = getOrSetDefault("InvalidMovementC.maxVl", 15);
-		invalidMovementBBannable = getOrSetDefault("InvalidMovementC.bannable", true);
-		invalidMovementBPunish = getStringList("InvalidMovementC.punish");
+		invalidMovementCEnabled = getOrSetDefault("InvalidMovementC.enabled", true);
+		invalidMovementCMaxVL = getOrSetDefault("InvalidMovementC.maxVl", 15);
+		invalidMovementCBannable = getOrSetDefault("InvalidMovementC.bannable", true);
+		invalidMovementCPunish = getStringList("InvalidMovementC.punish");
+
+		//PINGSPOOF
+		pingSpoofAEnabled = getOrSetDefault("PingSpoofA.enabled", true);
+		pingSpoofAMaxVL = getOrSetDefault("PingSpoofA.maxVl", 15);
+		pingSpoofABannable = getOrSetDefault("PingSpoofA.bannable", true);
+		pingSpoofAPunish = getStringList("PingSpoofA.punish");
 	}
 
 	@Override
@@ -732,7 +744,13 @@ public class ConfigManager extends YamlConfig {
 				"InvalidMovementC.enabled", invalidMovementCEnabled,
 				"InvalidMovementC.maxVl", invalidMovementCMaxVL,
 				"InvalidMovementC.bannable", invalidMovementCBannable,
-				"InvalidMovementC.punish", invalidMovementCPunish
+				"InvalidMovementC.punish", invalidMovementCPunish,
+
+				//PINGSPOOF
+				"PingSpoofA.enabled", pingSpoofAEnabled,
+				"PingSpoofA.maxVl", pingSpoofAMaxVL,
+				"PingSpoofA.bannable", pingSpoofABannable,
+				"PingSpoofA.punish", pingSpoofAPunish
 
 		);
 	}

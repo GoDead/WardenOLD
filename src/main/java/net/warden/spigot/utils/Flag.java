@@ -26,6 +26,7 @@ public class Flag {
 		int vl = data.getVLCount(check);
 		if (data == null) return;
 		Player player = data.getPlayer();
+		if (player.hasPermission("warden.bypass.alerts")) return;
 		if (SettingsManager.getInstance().getWorlds() != null && !SettingsManager.getInstance().getWorlds().isEmpty()) {
 			if (SettingsManager.getInstance().getWorlds().contains(player.getWorld().getName().toLowerCase())) {
 				return;
@@ -85,7 +86,7 @@ public class Flag {
 		if (user == null) return;
 		if (user.getPlayer() == null) return;
 		String name = user.getPlayer().getName();
-		if (user.getPlayer().hasPermission("warden.bypass")) return;
+		if (user.getPlayer().hasPermission("warden.bypass.punish")) return;
 		if (cheat.contains("Flight")) {
 			switch (type) {
 				case 'A':

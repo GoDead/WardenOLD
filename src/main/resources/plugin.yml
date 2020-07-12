@@ -2,4 +2,3 @@ name: Warden
 version: 0.7.4
 main: net.warden.spigot.Main
 author: GoDead
-api-version: 1.16

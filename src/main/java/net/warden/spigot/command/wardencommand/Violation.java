@@ -22,6 +22,7 @@ import net.warden.spigot.detection.player.badpackets.BadPacketsB;
 import net.warden.spigot.detection.player.badpackets.BadPacketsC;
 import net.warden.spigot.detection.player.fastbow.FastBowA;
 import net.warden.spigot.detection.player.fastbow.FastBowB;
+import net.warden.spigot.detection.player.pingspoof.PingSpoofA;
 import net.warden.spigot.detection.player.timer.TimerA;
 import net.warden.spigot.detection.player.velocity.VelocityA;
 import net.warden.spigot.playerdata.PlayerData;
@@ -87,6 +88,8 @@ public class Violation extends SimpleSubCommand {
 			tell(" &f- &cVelocity: &f" + getVelocityVL(user));
 		if (getInvalidMovementVL(user) != 0)
 			tell(" &f- &cInvalidMovement: &f" + getInvalidMovementVL(user));
+		if (getPingSpoofVL(user) != 0)
+			tell(" &f- &cPingSpoof: &f" + getPingSpoofVL(user));
 	}
 
 	private int getTotalVL(PlayerData user) {
@@ -200,4 +203,10 @@ public class Violation extends SimpleSubCommand {
 				+ user.getViolationsMap().getOrDefault(InvalidMovementC.class, 0);
 		return VL;
 	}
+
+	private int getPingSpoofVL(PlayerData user) {
+		int VL = user.getViolationsMap().getOrDefault(PingSpoofA.class, 0);
+		return VL;
+	}
+
 }

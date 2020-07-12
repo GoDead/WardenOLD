@@ -37,6 +37,7 @@ public class KillAuraI extends PrivateCheck {
 				WrappedPacketInUseEntity packetId = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
 				if (packetId.getAction() != EntityUseAction.ATTACK) return e;
 				assert user != null;
+				if (user.getTo() == null) return e;
 				float yawDiff = Math.abs(user.getFrom().getYaw() - user.getTo().getYaw());
 				float pitchDiff = Math.abs(user.getFrom().getPitch() - user.getTo().getPitch());
 				//Common.broadcast("&dY: " + yawDiff);

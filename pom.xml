@@ -377,22 +377,22 @@
            -->
 
 
-            <plugin>
+            <!--<plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
-                <!--
+                &lt;!&ndash;
                     Make sure to check for new versions from
                     https://mvnrepository.com/artifact/com.github.wvengen/proguard-maven-plugin
-                -->
+                &ndash;&gt;
                 <version>2.1.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>net.sf.proguard</groupId>
                         <artifactId>proguard-base</artifactId>
-                        <!--
+                        &lt;!&ndash;
                             Make sure to check for new versions from
                             https://mvnrepository.com/artifact/net.sf.proguard/proguard-base
-                         -->
+                         &ndash;&gt;
                         <version>6.1.1</version>
                     </dependency>
                 </dependencies>
@@ -410,7 +410,7 @@
                         <lib>${java.home}/lib/jce.jar</lib>
                     </libs>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <!--
                The second plugin is the shade plugin, packaging every library with
                the "compile" scope (see dependencies)

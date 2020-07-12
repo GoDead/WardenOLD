@@ -2,6 +2,7 @@ package net.warden.spigot.playerdata;
 
 import io.github.retrooper.packetevents.enums.ClientVersion;
 import net.warden.spigot.check.api.Check;
+import net.warden.spigot.utils.BlockUtils;
 import net.warden.spigot.utils.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -341,7 +342,7 @@ public final class PlayerData {
 		if (getTo() == null) return false;
 		Region region = new Region(getTo().clone().add(1, -1, 1), getTo().clone().add(-1, 1, -1));
 		region.getBlocks().forEach(block -> {
-			if (block.getType() == material.parseMaterial()) {
+			if (BlockUtils.getType(block) == material) {
 				materialList.add(true);
 			}
 		});
@@ -353,7 +354,7 @@ public final class PlayerData {
 		Region region = new Region(location.clone().add(1, -0.5, 1), location.clone().add(-1, 0.5, -1));
 		List<Block> blocks = region.getBlocks();
 		blocks.forEach(block -> {
-			if (block.toString().toLowerCase().contains("stair")) {
+			if (BlockUtils.getType(block).name().toLowerCase().contains("stair")) {
 				stairs.add(true);
 			}
 		});
@@ -361,15 +362,15 @@ public final class PlayerData {
 	}
 
 	public boolean isNearSlabs(Location location) {
-		List<Boolean> stairs = new ArrayList<>();
+		List<Boolean> slabs = new ArrayList<>();
 		Region region = new Region(location.clone().add(1, -0.5, 1), location.clone().add(-1, 0.5, -1));
 		List<Block> blocks = region.getBlocks();
 		blocks.forEach(block -> {
-			if (block.toString().toLowerCase().contains("slab")) {
-				stairs.add(true);
+			if (BlockUtils.getType(block).name().toLowerCase().contains("slab")) {
+				slabs.add(true);
 			}
 		});
-		return !stairs.isEmpty();
+		return !slabs.isEmpty();
 	}
 
 	public UUID getUniqueId() {
