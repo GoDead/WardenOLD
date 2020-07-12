@@ -21,14 +21,14 @@ public class FlightD extends PublicCheck {
 		if (event.getCauseEvent() instanceof BukkitMoveEvent) {
 			if (Compatibility.isInSpectator(((BukkitMoveEvent) event.getCauseEvent()).getPlayer())) return event;
 			BukkitMoveEvent event1 = (BukkitMoveEvent) event.getCauseEvent();
-			final double offsetY = event1.getTo().getY() - event1.getFrom().getY();
+			double deltaY = event1.getTo().getY() - event1.getFrom().getY();
 			Player player = event1.getPlayer();
 			PlayerData user = Main.getPlayerDataManager().find(((BukkitMoveEvent) event.getCauseEvent()).getPlayer().getUniqueId());
 			assert user != null;
 			long time = System.currentTimeMillis() - user.getLastVehicleAction();
 			if (time < 2000) return event;
 			if (Compatibility.isLegitVersion(player)) return event;
-			if (String.valueOf(offsetY).contains("E") && !player.getLocation().getBlock().isLiquid()) {
+			if (String.valueOf(deltaY).contains("E") && !player.getLocation().getBlock().isLiquid()) {
 				flag(user);
 			}
 		}

@@ -31,6 +31,8 @@ public class InvalidMovementA extends PrivateCheck {
 				assert user != null;
 				long teleport = System.currentTimeMillis() - user.getLastTeleport();
 				if (teleport < 2000) return e;
+				long damage = System.currentTimeMillis() - user.getTimeSinceDamage();
+				if (damage < 2000) return e;
 				long water = System.currentTimeMillis() - user.getLastInWater();
 				if (water < 2000) return e;
 				long levitation = System.currentTimeMillis() - user.getLastLevitation();

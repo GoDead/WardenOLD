@@ -35,7 +35,7 @@ public class InvalidMovementB extends PublicCheck {
 				if (Compatibility.isLegitVersion(player)) return e;
 				assert user != null;
 				if (user.getDeltaY() < 0.005 && user.getDeltaY() > 0 && !isNearBoat(user.getPlayer().getLocation()) && !hasDepthStrider(player)) {//funkemunky
-					flag(user);
+					//flag(user);
 				}
 			}
 		}

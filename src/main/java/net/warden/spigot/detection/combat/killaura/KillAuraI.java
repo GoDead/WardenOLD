@@ -55,7 +55,7 @@ public class KillAuraI extends PrivateCheck {
 				if (String.valueOf(diffDifference).contains("E")) {
 					flag();
 				}
-				if (diffDifference > 30 && user.getHitsInARow() > 5) {
+				if (diffDifference > 30 && user.getHitsInARow() > 10) {
 					flag();
 					//Common.broadcast("&d" + diffDifference + " &f" + distance);
 				}

@@ -1,5 +1,6 @@
 package net.warden.spigot.detection.combat.reach;
 
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
 import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.useentity.WrappedPacketInUseEntity;
@@ -31,6 +32,8 @@ public class ReachA extends PrivateCheck {
 				if (!(victim instanceof Player)) return e;
 				Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
 				Vector attackerPos;
+				if (PacketEvents.getAPI().getPlayerUtilities().getPing(player) > 80 || PacketEvents.getAPI().getPlayerUtilities().getPing((Player) victim) > 80)
+					return e;
 				if (player.isInsideVehicle()) {
 					attackerPos = player.getLocation().toVector();
 					attackerPos.setY(attackerPos.getY() + player.getEyeHeight());

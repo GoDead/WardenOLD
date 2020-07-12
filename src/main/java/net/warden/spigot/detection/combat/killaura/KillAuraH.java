@@ -1,5 +1,6 @@
 package net.warden.spigot.detection.combat.killaura;
 
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.enums.ServerVersion;
 import io.github.retrooper.packetevents.enums.minecraft.EntityUseAction;
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
@@ -41,7 +42,14 @@ public class KillAuraH extends PrivateCheck {
 			WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(((PacketReceiveEvent) e.getCauseEvent()).getNMSPacket());
 			if (packet.getAction() != EntityUseAction.ATTACK) return e;
 			Player player = ((PacketReceiveEvent) e.getCauseEvent()).getPlayer();
+			if (!(packet.getEntity() instanceof Player)) {
+				if (PacketEvents.getAPI().getPlayerUtilities().getPing(player) > 80) return e;
+			} else {
+				if (PacketEvents.getAPI().getPlayerUtilities().getPing(player) > 80 || PacketEvents.getAPI().getPlayerUtilities().getPing((Player) packet.getEntity()) > 80)
+					return e;
+			}
 			RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
+
 			assert user != null;
 			ArrayList<Vector> positions = rayTrace.traverse(5, 0.01);
 			for (int i = 0; i < positions.size(); i++) {
